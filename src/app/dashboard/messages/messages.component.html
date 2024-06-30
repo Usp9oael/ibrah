@@ -1,0 +1,32 @@
+<!-- messages.component.html -->
+<div class="min-h-screen bg-slate-950 text-white flex">
+  <!-- Sidebar -->
+  <div class="w-1/3 bg-slate-800 p-4">
+    <h2 class="text-2xl font-bold mb-4">Messages</h2>
+    <ul>
+      <li *ngFor="let message of messages" (click)="selectMessage(message)" class="p-2 hover:bg-slate-700 rounded cursor-pointer">
+        <div class="font-semibold">{{ message.sender }}</div>
+        <div class="text-sm text-gray-400">{{ message.preview }}</div>
+      </li>
+    </ul>
+  </div>
+  <!-- Chat Area -->
+  <div class="w-2/3 bg-white text-slate-950 p-6 rounded-lg flex flex-col">
+    <div *ngIf="selectedMessage" class="flex flex-col flex-grow">
+      <h2 class="text-2xl font-bold mb-4">{{ selectedMessage.sender }}</h2>
+      <div class="chat-history overflow-y-auto flex-grow mb-4 p-4 bg-gray-100 rounded">
+        <div *ngFor="let chat of selectedMessage.chats" [ngClass]="{'text-right': chat.sender === 'You'}" class="mb-2">
+          <div class=" rounded-md p-2" [ngClass]="{'bg-emerald-500 text-white p-2 rounded-md': chat.sender !== 'You', 'bg-blue-500 text-white p-2 rounded-md inline-block': chat.sender === 'You'}" class="max-w-xs inline-block">
+            <div class="font-semibold">{{ chat.sender }}</div>
+            <div>{{ chat.message }}</div>
+            <div class="text-xs text-gray-300">{{ chat.time }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 flex">
+        <textarea [(ngModel)]="newMessage" class="flex-grow p-2 bg-gray-200 rounded" placeholder="Type your message..."></textarea>
+        <button (click)="sendMessage()" class="ml-2 p-2 bg-slate-800 text-white rounded">Send</button>
+      </div>
+    </div>
+  </div>
+</div>

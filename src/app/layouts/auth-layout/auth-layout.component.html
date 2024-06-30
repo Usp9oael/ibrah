@@ -1,0 +1,19 @@
+<div class="auth-layout">
+    <nav class=" flex items-center justify-between bg-slate-950 p-2">
+        <div>
+            <span class=" capitalize font-extralight text-2xl text-neutral-100">Smart Invest</span>
+        </div>
+      <!-- Authentication navigation links if needed -->
+      <div class=" flex items-center justify-between gap-2">
+      <a 
+      class=" no-underline text-emerald-500 text-sm p-2 border border-neutral-100 rounded-md hover:bg-white hover:border-emerald-500 hover:border-2"
+      href="" 
+      routerLink="/login"> Login</a>
+      <a class=" no-underline text-emerald-500 text-sm p-2 border border-neutral-100 rounded-md hover:bg-white hover:border-emerald-500 hover:border-2" href="" routerLink="/register">Register</a>
+    </div>
+    </nav>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+  

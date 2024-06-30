@@ -1,0 +1,180 @@
+<div class=" flex flex-col">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
+    <!-- Analytics -->
+    <div class="bg-slate-950 text-white rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-bold mb-2">Analytics</h2>
+        <p class="text-sm">View your project analytics here.</p>
+        <a (click)="navigate('/dashboard/analytics')" class="text-blue-300 cursor-pointer hover:text-blue-400 mt-2 inline-block">View Details</a>
+    </div>
+
+    <!-- Investent products -->
+    <div class="bg-white text-slate-950 rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-bold mb-2">Investment Products</h2>
+        <p class="text-sm">Manage, invest, and browse investment products</p>
+        <a (click)="navigate('/dashboard/products')" class="text-blue-300 cursor-pointer hover:text-blue-400 mt-2 inline-block">View Products</a>
+    </div>
+
+    <!-- Messages -->
+    <div class="bg-white text-slate-950 rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-bold mb-2">Messages</h2>
+        <p class="text-sm">Check and respond to messages.</p>
+        <a (click)="navigate('/dashboard/messages')" class="text-blue-300 cursor-pointer hover:text-blue-400 mt-2 inline-block">Read Messages</a>
+    </div>
+
+    <!-- Settings -->
+    <div class="bg-slate-950 text-white rounded-lg shadow-lg p-4">
+        <h2 class="text-xl font-bold mb-2">Users</h2>
+        <p class="text-sm">Add, delete and update user registrations</p>
+        <a (click)="navigate('/dashboard/users')" class="text-blue-300 cursor-pointer hover:text-blue-400 mt-2 inline-block">Configure</a>
+    </div>
+</div>
+
+<!-- Mastercard and balance -->
+
+<div class="flex gap-4 flex-col md:flex-row justify-center items-center p-6">
+    <!-- Card -->
+    <div class="bg-white rounded-lg overflow-hidden shadow-md max-w-md w-full">
+      <!-- Card Front -->
+      <div class="bg-gradient-to-t from-slate-950 to-gray-900 text-white p-6">
+        <div class="flex justify-between items-center mb-4">
+          <img src="https://www.mastercard.us/content/dam/mccom/global/logos/logo-mastercard-mobile.svg" alt="MasterCard Logo" class="w-16">
+          <span class="text-lg font-bold">Smart Investments LTD</span>
+          <div></div>
+        </div>
+        <div class="text-lg font-semibold">
+         <div class=" py-10">
+            <div>
+                <span class=" text-xl font-bold opacity-80">
+                KES 12,456,780
+            </span>
+            </div>
+         </div>
+        </div>
+        <div class=" flex items-center justify-between">
+            <div class=" flex items-center gap-2"><span class="opacity-75">**** **** **** 1234</span>
+            <div>
+                <svg width="20px" height="20px" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h192v192H0z" style="fill:none"/><circle cx="96" cy="96" r="67" style="stroke:#ffffff;stroke-width:12px;stroke-miterlimit:10;fill:none"/><path d="M106.84 103.05C112.93 99.37 117 92.69 117 85.06c0-11.6-9.4-21-21-21s-21 9.4-21 21c0 7.63 4.07 14.31 10.16 17.99L75 127.93h42l-10.16-24.88Z" style="stroke-linejoin:round;stroke:#ffffff;stroke-width:12px;fill:none"/><path d="m22 22 26 26m96 96 26 26m-148 0 26-26m96-96 26-26" style="fill:none;stroke-linecap:round;stroke-miterlimit:10;stroke:#ffffff;stroke-width:12px"/></svg>
+            </div>
+            </div>
+            <div><span class="opacity-75">12/29</span></div>
+        </div>
+      </div>
+  
+      <!-- Card Back -->
+      <div class="bg-white p-6">
+        <div class="flex justify-end">
+          <div class="w-2/3 bg-gray-200 h-8 rounded"></div>
+        </div>
+      </div>
+    </div>
+    <!-- full details and investment products -->
+    <div class="flex justify-center w-full items-center">
+        <div class=" w-full bg-gradient-to-r from-white via-emerald-200/40 to-emerald-500 md:h-[300px] shadow-md rounded-lg p-6 space-y-6">
+      
+          <!-- Finance Account Balance -->
+          <div class="text-start p-4">
+            <p class="text-5xl font-bold text-slate-950">12,456,780 KES</p>
+          </div>
+      
+          <!-- Investment Products List -->
+          <div class="space-y-4">
+            <div class="flex items-center gap-2">
+              <!-- Stock 1 -->
+              <div class="flex items-center justify-between bg-slate-950 rounded-lg p-2">
+                <div>
+                  <h3 class="text-[14px] font-semibold text-neutral-100">Apple Inc (AAPL)</h3>
+                  <p class="text-[14px] text-gray-100">Technology - NASDAQ</p>
+                </div>
+                <div>
+                  <span class="text-lg font-semibold text-green-500">+$250 (2.5%)</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4 inline ml-1 text-green-500">
+                    <path d="M5 10l7-7 7 7H5z"/>
+                  </svg>
+                </div>
+              </div>
+          
+              <!-- ETF 1 -->
+              <div class="flex items-center justify-between bg-slate-950 rounded-lg p-2">
+                <div>
+                  <h3 class="text-[14px] font-semibold text-neutral-100">Vanguard S&P 500 ETF (VOO)</h3>
+                  <p class="text-[14px] text-gray-100">ETF - NYSE</p>
+                </div>
+                <div>
+                  <span class="text-lg font-semibold text-red-500">-$120 (-1.2%)</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4 inline ml-1 text-red-500">
+                    <path d="M19 14l-7 7-7-7h14z"/>
+                  </svg>
+                </div>
+              </div>
+          
+              <!-- Stock 2 (New) -->
+              <div class="flex items-center justify-between bg-slate-950 rounded-lg p-2">
+                <div>
+                  <h3 class="text-[14px] font-semibold text-neutral-100">Microsoft Corporation (MSFT)</h3>
+                  <p class="text-[14px] text-gray-100">Technology - NASDAQ</p>
+                </div>
+                <div>
+                  <span class="text-lg font-semibold text-green-500">+$180 (1.8%)</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-4 w-4 inline ml-1 text-green-500">
+                    <path d="M5 10l7-7 7 7H5z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+  </div>
+  <!-- statistics -->
+  <div class="w-full flex gap-3 items-center justify-between bg-white shadow-md rounded-lg p-6">
+
+    <!-- Total Users -->
+    <div class="bg-slate-950 w-full h-[150px] rounded-lg p-4 text-center text-white">
+      <h3 class="text-xl font-semibold">Total Users</h3>
+      <p class="text-3xl font-bold">367</p>
+    </div>
+  
+    <!-- Total Weekly Revenue -->
+    <div class="bg-slate-950 w-full h-[150px] rounded-lg p-4 text-center text-white">
+      <h3 class="text-xl font-semibold">Total Weekly Revenue</h3>
+      <p class="text-3xl font-bold">$120,456</p>
+    </div>
+  
+    <!-- Likes and Dislikes -->
+    <div class="bg-slate-950 w-full h-[150px] rounded-lg p-4 flex justify-between items-center text-white">
+      <div>
+        <h3 class="text-xl font-semibold">Likes</h3>
+        <button class="flex items-center bg-green-500 text-white px-4 py-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6 mr-2">
+            <path fill="none" d="M0 0h24v24H0z"/>
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2 13h-4v-2h4v2zm0-4h-4V7h4v4z"/>
+          </svg>
+          345 Likes
+        </button>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold">Dislikes</h3>
+        <button class="flex items-center bg-red-500 text-white px-4 py-2 rounded-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6 mr-2">
+            <path fill="none" d="M0 0h24v24H0z"/>
+            <path d="M8 17l4-4 4 4m0-10l-4 4-4-4"/>
+          </svg>
+          34 Dislikes
+        </button>
+      </div>
+    </div>
+  
+    <!-- New Random Data -->
+    <div class="bg-slate-950 w-full h-[150px] rounded-lg p-4 text-center text-white">
+      <h3 class="text-xl font-semibold">New weekly users</h3>
+      <p class="text-lg font-bold">56</p>
+    </div>
+  
+  </div>
+  
+  
+</div>
+
+  

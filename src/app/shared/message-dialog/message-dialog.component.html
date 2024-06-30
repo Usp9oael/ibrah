@@ -1,0 +1,12 @@
+<div class=" inset-0 fixed flex items-center justify-center">
+<div class="p-20 bg-slate-950 rounded-lg shadow-md">
+    <h2 class="text-xl font-bold mb-4 text-white">Message from {{ data.sender }}</h2>
+    <p class="mb-4">{{ data.content }}</p>
+    <textarea [(ngModel)]="reply" placeholder="Type your reply..." class="w-full p-2 border border-slate-950 rounded-md mb-4"></textarea>
+    <div class="flex justify-end">
+      <button (click)="onNoClick()" class="bg-red-500 text-white p-2 rounded-md mr-2">Cancel</button>
+      <button (click)="sendReply()" class="bg-slate-950 text-white p-2 rounded-md">Send</button>
+    </div>
+  </div>
+</div>
+  

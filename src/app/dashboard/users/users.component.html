@@ -1,0 +1,30 @@
+<div class="p-4 space-y-4">
+    <table class="min-w-full bg-white">
+      <thead>
+        <tr>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-gray-800 font-medium">Full Name</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-gray-800 font-medium">Email</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left text-gray-800 font-medium">Password</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index" class="hover:bg-gray-100">
+          <td class="py-2 px-4 border-b border-gray-200">{{ user.fullName }}</td>
+          <td class="py-2 px-4 border-b border-gray-200">{{ user.email }}</td>
+          <td class="py-2 px-4 border-b border-gray-200 flex items-center">
+            <span *ngIf="!user.showPassword">{{ user.password | hidePassword }}</span>
+            <span *ngIf="user.showPassword">{{ user.password }}</span>
+            <button (click)="togglePasswordVisibility(i)" class="ml-2 text-gray-600 hover:text-gray-900 focus:outline-none">
+              <svg *ngIf="!user.showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0m0 0a9 9 0 1 0 6.32 2.68m-2.24-2.24L15 12l-3 3m6-6 3 3" />
+              </svg>
+              <svg *ngIf="user.showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A9.002 9.002 0 0 1 4.5 12m1.364-4.364a9.003 9.003 0 0 1 14.136 0M20.25 12.18c-.348 1.167-.978 2.287-1.807 3.263m-.802 1.027l-3.186-3.187m-3.563 3.564-1.414-1.414M6.75 9.75 4.5 12m1.625 3.375 3.182-3.182" />
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

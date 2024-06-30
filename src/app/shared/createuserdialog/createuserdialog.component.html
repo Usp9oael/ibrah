@@ -1,0 +1,23 @@
+<!-- create-user-dialog.component.html -->
+<div class=" inset-0 fixed flex items-center justify-center h-screen ">
+<div class="p-4 flex flex-col items-center text-white bg-slate-950 rounded-md">
+    <h2 class=" text-white">Create User</h2>
+    <form (ngSubmit)="createUser()" class="space-y-4">
+      <div>
+        <label for="name">Full Name</label>
+        <input id="name" [(ngModel)]="name" name="fullName" type="text" required class="border rounded p-2 w-full">
+      </div>
+      <div>
+        <label for="email">Email</label>
+        <input id="email" [(ngModel)]="email" name="email" type="email" required class="border rounded p-2 w-full">
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input id="password" [(ngModel)]="password" name="password" type="password" required class="border rounded p-2 w-full">
+      </div>
+      <button type="submit" class="bg-slate-500 p-2 rounded-md text-neutral-100">Create User</button>
+    </form>
+    <button (click)="onNoClick()" class="bg-red-500 p-2 rounded-md text-neutral-100 mt-4">Cancel</button>
+  </div>
+</div>
+  

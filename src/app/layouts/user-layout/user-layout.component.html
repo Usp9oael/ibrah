@@ -1,0 +1,17 @@
+<div class=" flex items-center justify-between">
+    <!-- title -->
+    <div>
+        Users list
+    </div>
+    <!-- create update user button -->
+    <div class=" flex items-center gap-2">
+    <div class=" bg-slate-500 p-2 rounded-md text-neutral-100">
+        <a (click)="openCreateUserDialog()">Create User</a>
+    </div>
+    <div class=" bg-slate-500 p-2 rounded-md text-neutral-100">
+        <a (click)="navigate('/dashboard/users/update_user')">Update User</a>
+    </div>
+</div>
+</div>
+
+<app-users></app-users>
