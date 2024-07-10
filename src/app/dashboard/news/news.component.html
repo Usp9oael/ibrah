@@ -1,0 +1,24 @@
+<div class="min-h-screen flex items-center justify-center">
+  <div class="max-w-4xl w-full space-y-8">
+    <div>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Latest News</h2>
+    </div>
+    <div *ngIf="loading" class="flex items-center justify-center">
+      <svg class="animate-spin h-5 w-5 mr-3 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </div>
+    <div *ngIf="errorMessage" class="text-red-600 text-center">{{ errorMessage }}</div>
+    <div *ngIf="newsData && newsData.length > 0">
+      <div *ngFor="let article of newsData" class="bg-gray-100 p-4 rounded shadow-md mb-4">
+        <h3 class="text-xl font-bold text-gray-900">{{ article.title }}</h3>
+        <p class="text-gray-700">{{ article.description }}</p>
+        <img *ngIf="article.imageUrl" [src]="article.imageUrl" alt="{{ article.title }}" class="my-2 rounded-md" (error)="article.imageUrl = 'path_to_default_image.jpg'">
+        <a *ngIf="article.url" href="{{ article.url }}" target="_blank" class="block text-blue-600 hover:underline">Learn More</a>
+      </div>
+    </div>
+    <div *ngIf="newsData && newsData.length === 0" class="text-gray-600 text-center">No news available.</div>
+    <div *ngIf="!newsData && !loading && !errorMessage" class="text-gray-600 text-center">No news available or error occurred.</div>
+  </div>
+</div>

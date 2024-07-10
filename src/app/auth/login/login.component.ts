@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { AdminUserService } from '../../service/admin-user.service';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms'; // Import NgForm for form handling
+import { UserAuthService } from '../../service/auth/user-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,17 +9,37 @@ import { AdminUserService } from '../../service/admin-user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  loading = false;
+  statusMessage = 'Sign in'; 
+  errorMessage = ''; 
+  validationErrors: any;
 
-  constructor(private adminUserService: AdminUserService) {}
+  constructor(private userAuthService: UserAuthService, private router: Router) { }
 
-  onSubmit() {
-    const user = { email: this.email, password: this.password };
-    this.adminUserService.login(user).subscribe(response => {
-      console.log('Login successful', response);
-    }, error => {
-      console.error('Login error', error);
-    });
+  login(loginForm: NgForm) { // Update parameter to NgForm
+    if (loginForm.invalid) {
+      this.errorMessage = 'Please enter valid email and password.';
+      return;
+    }
+
+    const { email, password } = loginForm.value;
+    this.loading = true;
+    this.statusMessage = 'Signing in...';
+
+    // Assuming userAuthService.postRequest returns an Observable
+    this.userAuthService.postRequest('/api/open/registration/login', { email, password }, null).subscribe(
+      (response: any) => {
+        console.log('Login successful', response);
+        this.loading = false;
+        this.statusMessage = 'Success';
+        this.router.navigate(['/dashboard/home']);
+      },
+      (error: any) => {
+        console.error('Login failed', error);
+        this.loading = false;
+        this.errorMessage = 'Login failed. Please try again.';
+        console.log(error);
+      }
+    );
   }
 }

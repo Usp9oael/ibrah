@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
-interface User {
-  fullName: string;
-  email: string;
-  password: string;
-  showPassword?: boolean;
-}
+import { Router } from '@angular/router';
+import { UserFetchService } from '../../service/UsersFetch/user-fetch.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-users',
@@ -13,24 +9,107 @@ interface User {
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: User[] = [
-    { fullName: 'John Doe', email: 'john@example.com', password: 'password123' },
-    { fullName: 'Jane Smith', email: 'jane@example.com', password: 'password456' },
-    { fullName: 'Alice Johnson', email: 'alice@example.com', password: 'password789' },
-    { fullName: 'Bob Brown', email: 'bob@example.com', password: 'password321' },
-    { fullName: 'Charlie Davis', email: 'charlie@example.com', password: 'password654' },
-    { fullName: 'Diana Evans', email: 'diana@example.com', password: 'password987' },
-    { fullName: 'Evan Ford', email: 'evan@example.com', password: 'password234' },
-    { fullName: 'Fiona Green', email: 'fiona@example.com', password: 'password567' },
-    { fullName: 'George Hill', email: 'george@example.com', password: 'password890' },
-    { fullName: 'Hannah Ives', email: 'hannah@example.com', password: 'password012' }
-  ];
+  users: any[] = [];
+  filteredUsers: any[] = [];
+  searchQuery: string = '';
+  searchCriteria: string = 'id';
+  isModalVisible: boolean = false;
 
-  constructor() {}
+  constructor(private userFetchService: UserFetchService, private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchUsers();
+  }
 
-  togglePasswordVisibility(index: number): void {
-    this.users[index].showPassword = !this.users[index].showPassword;
+  fetchUsers(): void {
+    this.userFetchService.getRequest('/api/fetchUsers').subscribe(
+      (users: any[]) => {
+        this.users = users;
+        this.filteredUsers = [...this.users];
+        console.log("Fetched Users", users);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error fetching users', error);
+        if (error.error instanceof ErrorEvent) {
+          console.error('Client-side error:', error.error.message);
+        } else {
+          console.error(`Backend returned code ${error.status}, body was: ${error.error.text}`);
+        }
+      }
+    );
+  }
+
+  viewUserDetails(userId: number) {
+    this.router.navigate(['/view-user', userId]); // Replace with your actual route for viewing user details
+  }
+
+  searchUsers() {
+    if (!this.searchQuery.trim()) {
+      this.filteredUsers = [...this.users];
+      return;
+    }
+
+    this.filteredUsers = this.users.filter(user => {
+      const searchTerm = this.searchQuery.toLowerCase();
+      switch (this.searchCriteria) {
+        case 'id':
+          return user.id.toString().toLowerCase().includes(searchTerm);
+        case 'surname':
+          return user.surname.toLowerCase().includes(searchTerm);
+        case 'middleName':
+          return user.middleName.toLowerCase().includes(searchTerm);
+        case 'firstName':
+          return user.firstName.toLowerCase().includes(searchTerm);
+        case 'email':
+          return user.email.toLowerCase().includes(searchTerm);
+        case 'passport':
+          return user.idPassportNo.toLowerCase().includes(searchTerm);
+        case 'nationality':
+          return user.nationality.toLowerCase().includes(searchTerm);
+        case 'postalAddress':
+          return user.postalAddress.toLowerCase().includes(searchTerm);
+        case 'accountName':
+          return user.accountName.toLowerCase().includes(searchTerm);
+        case 'accountNumber':
+          return user.accountNumber.toLowerCase().includes(searchTerm);
+        case 'accountType':
+          return user.accountType.toLowerCase().includes(searchTerm);
+        case 'bankName':
+          return user.bankName.toLowerCase().includes(searchTerm);
+        case 'branch':
+          return user.branch.toLowerCase().includes(searchTerm);
+        case 'bankCode':
+          return user.bankCode.toLowerCase().includes(searchTerm);
+        case 'nextOfKin':
+          return user.nextOfKin.name.toLowerCase().includes(searchTerm);
+        default:
+          return false;
+      }
+    });
+  }
+
+  deleteUser(userId: number) {
+    if (confirm(`Are you sure you want to delete user ${userId}?`)) {
+      this.userFetchService.deleteUser(userId).subscribe(
+        () => {
+          console.log(`User ${userId} deleted successfully.`);
+          // Remove the deleted user from the local list
+          this.users = this.users.filter(user => user.id !== userId);
+          this.filteredUsers = [...this.users]; // Update filtered users
+        },
+        (error: HttpErrorResponse) => {
+          console.error(`Error deleting user ${userId}:`, error);
+          // Handle error deleting user
+        }
+      );
+    }
+  }
+
+  openModal() {
+    this.isModalVisible = true;
+  }
+
+  closeModal() {
+    this.isModalVisible = false;
   }
 }

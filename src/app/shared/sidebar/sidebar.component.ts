@@ -8,6 +8,9 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   @Output() closeSidebarEvent = new EventEmitter<void>();
+  sidebarOpen = false; 
+  isDropdownOpen: boolean = false;
+  showLogoutConfirmation: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -18,5 +21,14 @@ export class SidebarComponent {
 
   closeSidebar() {
     this.closeSidebarEvent.emit();
+  }
+
+  confirmLogout() {
+    this.showLogoutConfirmation = true;
+    this.sidebarOpen = false
+  }
+
+  cancelLogout() {
+    this.showLogoutConfirmation = false;
   }
 }

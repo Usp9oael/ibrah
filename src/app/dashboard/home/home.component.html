@@ -2,9 +2,9 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6">
     <!-- Analytics -->
     <div class="bg-slate-950 text-white rounded-lg shadow-lg p-4">
-        <h2 class="text-xl font-bold mb-2">Analytics</h2>
-        <p class="text-sm">View your project analytics here.</p>
-        <a (click)="navigate('/dashboard/analytics')" class="text-blue-300 cursor-pointer hover:text-blue-400 mt-2 inline-block">View Details</a>
+        <h2 class="text-xl font-bold mb-2">News</h2>
+        <p class="text-sm">View your admin news here.</p>
+        <a (click)="navigate('/dashboard/news')" class="text-blue-300 cursor-pointer hover:text-blue-400 mt-2 inline-block">View Details</a>
     </div>
 
     <!-- Investent products -->
@@ -142,28 +142,10 @@
       <p class="text-3xl font-bold">$120,456</p>
     </div>
   
-    <!-- Likes and Dislikes -->
-    <div class="bg-slate-950 w-full h-[150px] rounded-lg p-4 flex justify-between items-center text-white">
-      <div>
-        <h3 class="text-xl font-semibold">Likes</h3>
-        <button class="flex items-center bg-green-500 text-white px-4 py-2 rounded-full">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6 mr-2">
-            <path fill="none" d="M0 0h24v24H0z"/>
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2 13h-4v-2h4v2zm0-4h-4V7h4v4z"/>
-          </svg>
-          345 Likes
-        </button>
-      </div>
-      <div>
-        <h3 class="text-xl font-semibold">Dislikes</h3>
-        <button class="flex items-center bg-red-500 text-white px-4 py-2 rounded-full">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6 mr-2">
-            <path fill="none" d="M0 0h24v24H0z"/>
-            <path d="M8 17l4-4 4 4m0-10l-4 4-4-4"/>
-          </svg>
-          34 Dislikes
-        </button>
-      </div>
+    <!-- Total investment products -->
+    <div class="bg-slate-950 w-full h-[150px] rounded-lg p-4 text-center text-white">
+      <h3 class="text-xl font-semibold">Total Investment Products</h3>
+      <p class="text-3xl font-bold">237</p>
     </div>
   
     <!-- New Random Data -->

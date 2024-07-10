@@ -1,23 +1,110 @@
-<!-- create-user-dialog.component.html -->
-<div class=" inset-0 fixed flex items-center justify-center h-screen ">
-<div class="p-4 flex flex-col items-center text-white bg-slate-950 rounded-md">
-    <h2 class=" text-white">Create User</h2>
-    <form (ngSubmit)="createUser()" class="space-y-4">
-      <div>
-        <label for="name">Full Name</label>
-        <input id="name" [(ngModel)]="name" name="fullName" type="text" required class="border rounded p-2 w-full">
+<div class="inset-0 fixed bg-black/60 flex items-center justify-center" *ngIf="isVisible">
+  <div class="absolute top-3 left-3 border-2 border-neutral-200 rounded-full">
+    <!-- <span class="text-5xl text-white p-3 cursor-pointer" (click)="closeModal()">&times;</span> -->
+  </div>
+  <div class="p-4 bg-white md:h-[700px] m-5 overflow-scroll overflow-y-scroll overflow-x-hidden">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class=" flex flex-wrap gap-4">
+      <div class="mb-4">
+        <label for="surname" class="block text-gray-700">Surname</label>
+        <input type="text" id="surname" formControlName="surname" class="w-full p-2 border border-gray-300  mt-1" />
       </div>
-      <div>
-        <label for="email">Email</label>
-        <input id="email" [(ngModel)]="email" name="email" type="email" required class="border rounded p-2 w-full">
+      <div class="mb-4">
+        <label for="middleName" class="block text-gray-700">Middle Name</label>
+        <input type="text" id="middleName" formControlName="middleName"
+          class="w-full p-2 border border-gray-300  mt-1" />
       </div>
-      <div>
-        <label for="password">Password</label>
-        <input id="password" [(ngModel)]="password" name="password" type="password" required class="border rounded p-2 w-full">
+      <div class="mb-4">
+        <label for="firstName" class="block text-gray-700">First Name</label>
+        <input type="text" id="firstName" formControlName="firstName" class="w-full p-2 border border-gray-300  mt-1" />
       </div>
-      <button type="submit" class="bg-slate-500 p-2 rounded-md text-neutral-100">Create User</button>
+      <div class="mb-4">
+        <label for="dateOfBirth" class="block text-gray-700">Date of Birth</label>
+        <input type="date" id="dateOfBirth" formControlName="dateOfBirth"
+          class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="idPassportNo" class="block text-gray-700">ID/Passport No</label>
+        <input type="text" id="idPassportNo" formControlName="idPassportNo"
+          class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="nationality" class="block text-gray-700">Nationality</label>
+        <input type="text" id="nationality" formControlName="nationality"
+          class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700">Email</label>
+        <input type="email" id="email" formControlName="email" class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="postalAddress" class="block text-gray-700">Postal Address</label>
+        <input type="text" id="postalAddress" formControlName="postalAddress"
+          class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="accountName" class="block text-gray-700">Account Name</label>
+        <input type="text" id="accountName" formControlName="accountName"
+          class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="accountNumber" class="block text-gray-700">Account Number</label>
+        <input type="text" id="accountNumber" formControlName="accountNumber"
+          class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="accountType" class="block text-gray-700">Account Type</label>
+        <input type="text" id="accountType" formControlName="accountType"
+          class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="bankName" class="block text-gray-700">Bank Name</label>
+        <input type="text" id="bankName" formControlName="bankName" class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="branch" class="block text-gray-700">Branch</label>
+        <input type="text" id="branch" formControlName="branch" class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div class="mb-4">
+        <label for="bankCode" class="block text-gray-700">Bank Code</label>
+        <input type="text" id="bankCode" formControlName="bankCode" class="w-full p-2 border border-gray-300  mt-1" />
+      </div>
+      <div formGroupName="nextOfKin">
+        <div class="mb-4">
+          <label for="nextOfKinName" class="block text-gray-700">Next of Kin Name</label>
+          <input type="text" id="nextOfKinName" formControlName="name"
+            class="w-full p-2 border border-gray-300  mt-1" />
+        </div>
+        <div class="mb-4">
+          <label for="relationship" class="block text-gray-700">Relationship</label>
+          <input type="text" id="relationship" formControlName="relationship"
+            class="w-full p-2 border border-gray-300  mt-1" />
+        </div>
+        <div class="mb-4">
+          <label for="nextOfKinIdPassportNo" class="block text-gray-700">ID/Passport No</label>
+          <input type="text" id="nextOfKinIdPassportNo" formControlName="idPassportNo"
+            class="w-full p-2 border border-gray-300  mt-1" />
+        </div>
+        <div class="mb-4">
+          <label for="telephoneNumber" class="block text-gray-700">Telephone Number</label>
+          <input type="text" id="telephoneNumber" formControlName="telephoneNumber"
+            class="w-full p-2 border border-gray-300  mt-1" />
+        </div>
+      </div>
+      <div formGroupName="idPicture">
+        <div class="mb-4">
+          <label for="frontSidePath" class="block text-gray-700">ID Picture Front Side</label>
+          <input type="file" id="frontSidePath" formControlName="frontSidePath"
+            class="w-full p-2 border border-gray-300  mt-1" />
+        </div>
+        <div class="mb-4">
+          <label for="backSidePath" class="block text-gray-700">ID Picture Back Side</label>
+          <input type="file" id="backSidePath" formControlName="backSidePath"
+            class="w-full p-2 border border-gray-300  mt-1" />
+        </div>
+      </div>
+      <button type="submit" class="bg-slate-950 w-full text-white p-2 md:py-3 " (click)="closeModal()">Create
+        User</button>
+        <button class="bg-slate-600 w-full text-white p-2 md:py-3 " (click)="closeModal()">Cancel</button>
     </form>
-    <button (click)="onNoClick()" class="bg-red-500 p-2 rounded-md text-neutral-100 mt-4">Cancel</button>
   </div>
 </div>
-  

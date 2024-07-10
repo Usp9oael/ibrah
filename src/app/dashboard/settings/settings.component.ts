@@ -13,15 +13,8 @@ export class SettingsComponent {
   constructor() {}
 
   saveProfileChanges() {
-    // Implement logic to save profile changes
-    console.log('Username:', this.username);
-    console.log('Email:', this.email);
-    // Add service calls or API interactions here
   }
 
   changePassword() {
-    // Implement logic to change password
-    console.log('New Password:', this.password);
-    // Add service calls or API interactions here
   }
 }

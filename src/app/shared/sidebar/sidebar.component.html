@@ -1,16 +1,71 @@
-<div class="h-full md:w-[350px] w-[200px] bg-slate-950 text-white p-4 relative">
-    <!-- Close button -->
-    <div class="absolute top-2 right-2 cursor-pointer" (click)="closeSidebar()">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
+<div class="h-full flex flex-col justify-between md:w-[350px] w-[200px] bg-slate-950 text-white p-4 relative">
+  <!-- Close button -->
+  <div class="absolute top-2 right-2 cursor-pointer" (click)="closeSidebar()">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24"
+      stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </div>
+  <!-- Sidebar content here -->
+  <div class=" flex flex-col py-3 mt-3">
+    <a (click)="navigate('/dashboard/home')"
+      class="block px-4 py-2 text-gray-300 hover:bg-slate-800 rounded-md cursor-pointer">Dashboard</a>
+    <a (click)="navigate('/dashboard/profile')"
+      class="block px-4 py-2 text-gray-300 hover:bg-slate-800 rounded-md cursor-pointer">Profile</a>
+    <a (click)="navigate('/dashboard/settings')"
+      class="block px-4 py-2 text-gray-300 hover:bg-slate-800 rounded-md cursor-pointer">Settings</a>
+  </div>
+  <div>
+    <!-- User logout -->
+    <div class="w-full">
+      <button (click)="confirmLogout()" class="px-4 py-3 text-neutral-100 border-t w-full border-gray-400">
+        <div class=" flex items-center justify-between">
+          <span>
+            Logout
+          </span>
+          <div>
+            <svg fill="#ffffff" height="20px" width="20px" version="1.1" id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="0 0 384.971 384.971" xml:space="preserve">
+              <g>
+                <g id="Sign_Out">
+                  <path d="M180.455,360.91H24.061V24.061h156.394c6.641,0,12.03-5.39,12.03-12.03s-5.39-12.03-12.03-12.03H12.03
+			C5.39,0.001,0,5.39,0,12.031V372.94c0,6.641,5.39,12.03,12.03,12.03h168.424c6.641,0,12.03-5.39,12.03-12.03
+			C192.485,366.299,187.095,360.91,180.455,360.91z" />
+                  <path d="M381.481,184.088l-83.009-84.2c-4.704-4.752-12.319-4.74-17.011,0c-4.704,4.74-4.704,12.439,0,17.179l62.558,63.46H96.279
+			c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179
+			c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z" />
+                </g>
+                <g>
+                </g>
+                <g>
+                </g>
+                <g>
+                </g>
+                <g>
+                </g>
+                <g>
+                </g>
+                <g>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </button>
+
+      <div *ngIf="showLogoutConfirmation"
+        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+        <div class="bg-slate-950 p-4 rounded shadow-md">
+          <h2 class="text-lg font-bold mb-4">Confirm Logout</h2>
+          <p class="mb-4">Are you sure you want to logout?</p>
+          <div class="flex justify-end space-x-4">
+            <button (click)="cancelLogout()" class="px-4 py-2 text-slate-950 bg-gray-300 rounded">Cancel</button>
+            <button (click)="navigate('/login')"
+              class="px-4 py-2 bg-slate-950 border-2 border-neutral-100 text-white rounded">Yes, Logout</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- Sidebar content here -->
-    <p>Sidebar content</p>
-    <div class=" flex flex-col py-3">
-    <a (click)="navigate('/dashboard/home')" class="block px-4 py-2 text-gray-300 hover:bg-slate-800 rounded-md cursor-pointer">Dashboard</a>
-    <a (click)="navigate('/dashboard/profile')" class="block px-4 py-2 text-gray-300 hover:bg-slate-800 rounded-md cursor-pointer">Profile</a>
-    <a (click)="navigate('/dashboard/settings')" class="block px-4 py-2 text-gray-300 hover:bg-slate-800 rounded-md cursor-pointer">Settings</a>
   </div>
-  </div>
-  
+</div>

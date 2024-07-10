@@ -5,33 +5,20 @@
             Smart Invest
         </span>
     <div class="text-neutral-200 cursor-pointer" (click)="toggleSidebar()">
-        <!-- Icon for hamburger menu -->
+        <!-- svg icon for hamburger menu -->
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 6h16M4 12h16m-7 6h7" />
         </svg>
     </div>
 </div>
     <!-- Title -->
     <div>
         <span class="text-neutral-200">
-            Smart Invest Admin Dashboard
+            Admin Dashboard
         </span>
     </div>
-    <!-- User badge -->
-    <div class="relative">
-        <!-- User's name -->
-        <div class="cursor-pointer" (click)="toggleDropdown()">
-            <!-- <span class="text-neutral-200">
-                Welcome {{ user.name }}
-            </span> -->
-        </div>
-        <!-- Dropdown menu -->
-        <div *ngIf="isDropdownOpen"
-            class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10">
-            <a (click)="logoutAction()"
-                class="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer">Logout</a>
-        </div>
-    </div>
+
+      
 </nav>
 
 <!-- Sidebar -->

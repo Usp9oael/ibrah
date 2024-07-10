@@ -1,30 +1,86 @@
-<div class="p-4 space-y-4">
-    <table class="min-w-full bg-white">
-      <thead>
-        <tr>
-          <th class="py-2 px-4 border-b border-gray-200 text-left text-gray-800 font-medium">Full Name</th>
-          <th class="py-2 px-4 border-b border-gray-200 text-left text-gray-800 font-medium">Email</th>
-          <th class="py-2 px-4 border-b border-gray-200 text-left text-gray-800 font-medium">Password</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users; let i = index" class="hover:bg-gray-100">
-          <td class="py-2 px-4 border-b border-gray-200">{{ user.fullName }}</td>
-          <td class="py-2 px-4 border-b border-gray-200">{{ user.email }}</td>
-          <td class="py-2 px-4 border-b border-gray-200 flex items-center">
-            <span *ngIf="!user.showPassword">{{ user.password | hidePassword }}</span>
-            <span *ngIf="user.showPassword">{{ user.password }}</span>
-            <button (click)="togglePasswordVisibility(i)" class="ml-2 text-gray-600 hover:text-gray-900 focus:outline-none">
-              <svg *ngIf="!user.showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0m0 0a9 9 0 1 0 6.32 2.68m-2.24-2.24L15 12l-3 3m6-6 3 3" />
-              </svg>
-              <svg *ngIf="user.showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A9.002 9.002 0 0 1 4.5 12m1.364-4.364a9.003 9.003 0 0 1 14.136 0M20.25 12.18c-.348 1.167-.978 2.287-1.807 3.263m-.802 1.027l-3.186-3.187m-3.563 3.564-1.414-1.414M6.75 9.75 4.5 12m1.625 3.375 3.182-3.182" />
-              </svg>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<div class="flex items-center justify-between mx-5">
+  <div class="flex items-center space-x-4 mb-4">
+    <select id="searchCriteria" class="px-2 py-2 border">
+      <option value="id">ID</option>
+      <option value="surname">Surname</option>
+      <option value="middleName">Middle Name</option>
+      <option value="firstName">First Name</option>
+      <option value="email">Email</option>
+      <option value="nationality">Nationality</option>
+      <option value="passport">ID/Passport</option>
+      <option value="postalAddress">Postal Address</option>
+      <option value="accountName">Account Name</option>
+      <option value="accountNumber">Account Number</option>
+      <option value="accountType">Account Type</option>
+      <option value="bankName">Bank Name</option>
+      <option value="branch">Branch</option>
+      <option value="bankCode">Bank Code</option>
+      <option value="nextOfKin">Next of Kin</option>
+    </select>
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Enter search term" class="px-2 py-2 border">
+    <button (click)="searchUsers()" class="px-4 py-2 bg-slate-950 text-neutral-100">Search</button>
   </div>
   
+  <div class="mb-4">
+    <button (click)="openModal()" class="px-4 py-2 bg-slate-950 text-neutral-100">
+      Create User
+    </button>
+    <app-createuserdialog [isVisible]="isModalVisible" (close)="closeModal()"></app-createuserdialog>
+  </div>
+</div>
+
+<div class="overflow-x-auto mx-5">
+  <table class="min-w-full bg-white shadow-md overflow-hidden">
+    <thead class="bg-gray-800 text-white">
+      <tr>
+        <th class="py-2 px-4">ID</th>
+        <th class="py-2 px-4">Surname</th>
+        <th class="py-2 px-4">Middle Name</th>
+        <th class="py-2 px-4">First Name</th>
+        <th class="py-2 px-4">Date of Birth</th>
+        <th class="py-2 px-4">Passport Number</th>
+        <th class="py-2 px-4">Nationality</th>
+        <th class="py-2 px-4">Email</th>
+        <th class="py-2 px-4">Postal Address</th>
+        <th class="py-2 px-4">Account Name</th>
+        <th class="py-2 px-4">Account Number</th>
+        <th class="py-2 px-4">Account Type</th>
+        <th class="py-2 px-4">Bank Name</th>
+        <th class="py-2 px-4">Branch</th>
+        <th class="py-2 px-4">Bank Code</th>
+        <th class="py-2 px-4">Next of Kin</th>
+        <th class="py-2 px-4">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers">
+        <td class="py-2 px-4 cursor-pointer">{{ user.id }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.surname }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.middleName }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.firstName }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.dateOfBirth }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.idPassportNo }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.nationality }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.email }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.postalAddress }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.accountName }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.accountNumber }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.accountType }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.bankName }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.branch }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.bankCode }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.nextOfKin.name }}</td>
+        <td class="py-2 px-4">
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  (click)="viewUserDetails(user.id)">
+            View
+          </button>
+          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  (click)="deleteUser(user.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -14,37 +14,50 @@ import { UsersComponent } from './dashboard/users/users.component';
 import { CreateUserComponent } from './children/create-user/create-user.component';
 import { UpdateUserComponent } from './children/update-user/update-user.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
+import { UsersdetailsComponent } from './shared/usersdetails/usersdetails.component';
+import { NewsComponent } from './dashboard/news/news.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
-  //  step 1: change the redirectTo from "dashboard/home" to "login"
-  { path: '', redirectTo: 'dashboard/home', pathMatch: 'full' },
+  // Default redirect to login page
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
+  // Routes under the AuthLayoutComponent
   {
     path: '',
     component: AuthLayoutComponent,
-    // Step 2: uncomment the line below to acces the login and register auth page
-    // children: [
-    //   { path: 'login', component: LoginComponent },
-    //   { path: 'register', component: RegisterComponent },
-    // ],
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
+    ],
   },
+
+  // Routes under the DashboardLayoutComponent
   {
-    path: '',
+    path: 'dashboard',
     component: DashboardLayoutComponent,
     children: [
-      { path: 'dashboard/home', component: HomeComponent, data: { breadcrumb: 'Home' } },
-      { path: 'dashboard/profile', component: ProfileComponent, data: { breadcrumb: 'Profile' } },
-      { path: 'dashboard/settings', component: SettingsComponent, data: { breadcrumb: 'Settings' } },
-      { path: 'dashboard/analytics', component: AnalyticsComponent, data: { breadcrumb: 'Analytics' } },
-      { path: 'dashboard/products', component: ProductsComponent, data: { breadcrumb: 'Products' } },
-      { path: 'dashboard/messages', component: MessagesComponent, data: { breadcrumb: 'Messages' } },
-      { 
-        path: 'dashboard/users', 
+      { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
+      { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Profile' } },
+      { path: 'settings', component: SettingsComponent, data: { breadcrumb: 'Settings' } },
+      { path: 'analytics', component: AnalyticsComponent, data: { breadcrumb: 'Analytics' } },
+      { path: 'products', component: ProductsComponent, data: { breadcrumb: 'Products' } },
+      { path: 'messages', component: MessagesComponent, data: { breadcrumb: 'Messages' } },
+      { path: 'news', component: NewsComponent, data: { breadcrumb: 'News' } },
+
+      // Routes under the UserLayoutComponent
+      {
+        path: 'users',
         component: UserLayoutComponent,
         data: { breadcrumb: 'Users' },
         children: [
           { path: '', component: UsersComponent, data: { breadcrumb: '' } },
           { path: 'create_user', component: CreateUserComponent, data: { breadcrumb: 'Create User' } },
-          { path: 'update_user', component: UpdateUserComponent, data: { breadcrumb: 'Update User' } },
+          { path: 'update_user/:id', component: UpdateUserComponent, data: { breadcrumb: 'Update User' } },
+          { path: 'users_details/:id', component: UsersdetailsComponent },
         ],
       },
     ],

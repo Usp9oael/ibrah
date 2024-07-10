@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserAuthService } from '../../service/auth/user-auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../user';
@@ -8,25 +8,18 @@ import { User } from '../../user';
   templateUrl: './dashboard-nav.component.html',
   styleUrls: ['./dashboard-nav.component.css']
 })
-export class DashboardNavComponent implements OnInit {
+
+// implements oninit
+export class DashboardNavComponent  {
   user!: User;
   sidebarOpen = false; 
   isDropdownOpen: boolean = false;
+  showLogoutConfirmation: boolean = false;
 
   constructor(public userAuthService: UserAuthService, private router: Router) {}
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
-  ngOnInit(): void {
-    if (localStorage.getItem('token') === "" || localStorage.getItem('token') === null) {
-      this.router.navigateByUrl('/');
-    } else {
-      this.userAuthService.getUser().then(({ data }) => {
-        this.user = data;
-      });
-    }
   }
 
   toggleSidebar() {
@@ -38,13 +31,13 @@ export class DashboardNavComponent implements OnInit {
     this.sidebarOpen = false; 
   }
 
-  logoutAction() {
-    this.userAuthService.logout().then(() => {
-      localStorage.setItem('token', "");
-      this.router.navigateByUrl('/');
-    }).catch(() => {
-      localStorage.setItem('token', "");
-      this.router.navigateByUrl('/');
-    });
+  confirmLogout() {
+    this.showLogoutConfirmation = true;
   }
+
+  cancelLogout() {
+    this.showLogoutConfirmation = false;
+  }
+
+  
 }

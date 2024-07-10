@@ -1,19 +1,22 @@
 <div class="auth-layout">
-    <nav class=" flex items-center justify-between bg-slate-950 p-2">
+    <nav class=" flex items-center fixed top-0 w-full justify-between p-2">
         <div>
-            <span class=" capitalize font-extralight text-2xl text-neutral-100">Smart Invest</span>
+            <span class=" capitalize font-extrabold text-2xl text-slate-950">Smart Invest</span>
         </div>
       <!-- Authentication navigation links if needed -->
       <div class=" flex items-center justify-between gap-2">
       <a 
-      class=" no-underline text-emerald-500 text-sm p-2 border border-neutral-100 rounded-md hover:bg-white hover:border-emerald-500 hover:border-2"
+      class="  no-underline text-neutral-100 text-sm p-2 border border-neutral-100 bg-slate-950"
       href="" 
       routerLink="/login"> Login</a>
-      <a class=" no-underline text-emerald-500 text-sm p-2 border border-neutral-100 rounded-md hover:bg-white hover:border-emerald-500 hover:border-2" href="" routerLink="/register">Register</a>
+      <a class=" no-underline text-neutral-100 text-sm p-2 border border-neutral-100 bg-slate-950" href="" routerLink="/register">Register</a>
     </div>
     </nav>
     <main>
       <router-outlet></router-outlet>
     </main>
+    <div>
+      <app-footer></app-footer>
+    </div>
   </div>
   

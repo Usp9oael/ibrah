@@ -1,0 +1,32 @@
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .news-article {
+    border: 1px solid #ddd;
+    padding: 16px;
+    width: calc(33% - 32px);
+    box-sizing: border-box;
+  }
+  
+  .news-article img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .news-article h2 {
+    font-size: 1.5em;
+    margin: 0.5em 0;
+  }
+  
+  .news-article p {
+    margin: 0.5em 0;
+  }
+  
+  .news-article a {
+    color: blue;
+    text-decoration: underline;
+  }
+  

@@ -1,59 +1,55 @@
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import axios from 'axios';
-import { User } from '../../user';
+import { Observable, throwError } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
-  updateUser(updatedUser: User): Promise<any>{
-    return axios.put(`/api/user/${updatedUser.id}`, updatedUser, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } });
+  private url: string = "https://investmentapp.onrender.com";
+
+  constructor(private httpClient: HttpClient) { }
+
+  public postRequest(endpoint: string, data: any, token: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": ""
+    });
+    return this.httpClient.post(`${this.url}${endpoint}`, JSON.stringify(data), { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
-  deleteUser(id: number | undefined): Promise<any> {
-    if (id === undefined) {
-      throw new Error('User ID is undefined.');
+
+  public getRequest(endpoint: string, token: string | null): Observable<any> {
+    const headers = new HttpHeaders({
+      "Authorization": `Bearer ${token}`,
+      "ngrok-skip-browser-warning": ""
+    });
+    return this.httpClient.get(`${this.url}${endpoint}`, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Server returned code: ${error.status}, error message is: ${error.message}`;
     }
-
-    return axios.delete(`/api/users/${id}`, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } });
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 
-  addUser(newUser: User): Promise<any> {
-    let payload = {
-      name: newUser.name,
-      email: newUser.email,
-      password: newUser.password
-    };
-
-    return axios.post('/api/users', payload);
+  public fetchUsers(token: string | null, userId?: string): Observable<any> {
+    return this.getRequest('/api/fetchUsers', userId || null);
   }
-
-  constructor() { }
-
-  login(data: { email: string, password: string }): Promise<any> {
-    let payload = {
-      email: data.email,
-      password: data.password
-    };
-
-    return axios.post('/api/login', payload);
-  }
-
-  register(data: { name: string, email: string, password: string, confirmPassword: string }): Promise<any> {
-    let payload = {
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      password_confirmation: data.confirmPassword
-    };
-
-    return axios.post('/api/register', payload);
-  }
-
-  getUser(): Promise<any> {
-    return axios.get('/api/user', { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } });
-  }
-
-  logout(): Promise<any> {
-    return axios.post('/api/logout', {}, { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } });
-  }
+  
+  
+  
 }
