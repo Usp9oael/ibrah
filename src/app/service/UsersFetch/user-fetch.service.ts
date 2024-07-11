@@ -41,7 +41,7 @@ export class UserFetchService {
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": ""
     });
-    const url = `${this.url}/api/users/${userId}`;
+    const url = `${this.url}/api/fetchUsers/${userId}`;
     return this.httpClient.delete(url, { headers })
       .pipe(
         catchError(this.handleError)

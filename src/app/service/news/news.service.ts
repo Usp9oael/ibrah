@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NewsService {
-  private apiUrl = 'https://investmentapp.onrender.com/api/news'; // Replace with your actual API endpoint
+  private apiUrl = 'https://investmentapp.onrender.com/api/news';
 
   constructor() {}
 
@@ -23,8 +23,13 @@ export class NewsService {
         }
       })
       .then(response => {
-        observer.next(response.data.data); // Extract 'data' array from response
-        observer.complete();
+        console.log('API Response:', response); // Log the entire API response
+        if (response.data && response.data.data) {
+          observer.next(response.data.data);
+          observer.complete();
+        } else {
+          observer.error('Invalid response structure');
+        }
       })
       .catch(error => {
         console.error('Error fetching news:', error);
@@ -32,6 +37,4 @@ export class NewsService {
       });
     });
   }
-  
-  
 }

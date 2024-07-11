@@ -7,7 +7,7 @@ import { NewsService } from '../../service/news/news.service';
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
-  newsData: any[] = []; // Initialize newsData as an empty array for type safety
+  newsData: any[] = [];
   loading = false;
   errorMessage = '';
 
@@ -21,11 +21,12 @@ export class NewsComponent implements OnInit {
     this.loading = true;
     this.newsService.getNews().subscribe(
       (data: any[]) => {
-        console.log('News Data:', data); // Check if 'data' is correctly logged
+        console.log('News Data:', data); // Log the entire response to ensure imageUrl is present
         this.newsData = data;
         this.loading = false;
       },
       (error) => {
+        console.error('Error fetching news:', error); // Improved error logging
         this.errorMessage = error;
         this.loading = false;
       }

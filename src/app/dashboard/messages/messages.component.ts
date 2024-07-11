@@ -1,82 +1,71 @@
-import { Component } from '@angular/core';
-
-interface Message {
-  sender: string;
-  preview: string;
-  chats: Chat[];
-}
-
-interface Chat {
-  sender: string;
-  message: string;
-  time: string;
-}
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent {
-  messages: Message[] = [
-    {
-      sender: 'Alice',
-      preview: 'Hey, how are you?',
-      chats: [
-        { sender: 'Alice', message: 'Hey, how are you?', time: '10:00 AM' },
-        { sender: 'You', message: 'I am good, thanks!', time: '10:02 AM' }
-      ]
-    },
-    {
-      sender: 'Ibrahim',
-      preview: 'How can I start investing?',
-      chats: [
-        { sender: 'Ibrahim', message: 'How can I start investing?', time: '10:00 AM' },
-        { sender: 'You', message: 'Follow the below procedure', time: '10:02 AM' }
-      ]
-    },
-    {
-      sender: 'Faraj',
-      preview: 'What is smart invest?',
-      chats: [
-        { sender: 'Faraj', message: 'What is smart invest?', time: '10:00 AM' },
-        { sender: 'You', message: 'I will take you through', time: '10:02 AM' }
-      ]
-    },
-    {
-      sender: 'Alice',
-      preview: 'Hey, how are you?',
-      chats: [
-        { sender: 'Alice', message: 'Hey, how are you?', time: '10:00 AM' },
-        { sender: 'You', message: 'I am good, thanks!', time: '10:02 AM' }
-      ]
-    },
-    {
-      sender: 'Bob',
-      preview: 'Check out this link',
-      chats: [
-        { sender: 'Bob', message: 'Check out this link', time: '09:30 AM' },
-        { sender: 'You', message: 'Interesting, thanks!', time: '09:35 AM' }
-      ]
-    }
-    // Add more messages as needed
-  ];
+export class MessagesComponent implements OnInit {
+  applyingAdvisors: any[] = [];
+  approvedAdvisors: any[] = [];
+  showCreateAdvisorModal: boolean = false;
+  newAdvisor: any = {};
 
-  selectedMessage: Message | null = null;
-  newMessage: string = '';
+  constructor(private http: HttpClient) {}
 
-  selectMessage(message: Message) {
-    this.selectedMessage = message;
+  ngOnInit(): void {
+    this.fetchApplyingAdvisors();
+    this.fetchApprovedAdvisors();
   }
 
-  sendMessage() {
-    if (this.selectedMessage && this.newMessage.trim()) {
-      this.selectedMessage.chats.push({
-        sender: 'You',
-        message: this.newMessage,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      });
-      this.newMessage = '';
-    }
+  fetchApplyingAdvisors(): void {
+    this.http.get<any[]>('https://api.example.com/applying-advisors').subscribe(
+      data => this.applyingAdvisors = data,
+      error => console.error('Error fetching applying advisors', error)
+    );
+  }
+
+  fetchApprovedAdvisors(): void {
+    this.http.get<any[]>('https://api.example.com/approved-advisors').subscribe(
+      data => this.approvedAdvisors = data,
+      error => console.error('Error fetching approved advisors', error)
+    );
+  }
+
+  acceptAdvisor(advisorId: string): void {
+    this.http.post(`https://api.example.com/accept-advisor/${advisorId}`, {}).subscribe(
+      () => {
+        this.fetchApplyingAdvisors();
+        this.fetchApprovedAdvisors();
+      },
+      error => console.error('Error accepting advisor', error)
+    );
+  }
+
+  rejectAdvisor(advisorId: string): void {
+    this.http.post(`https://api.example.com/reject-advisor/${advisorId}`, {}).subscribe(
+      () => this.fetchApplyingAdvisors(),
+      error => console.error('Error rejecting advisor', error)
+    );
+  }
+
+  openCreateAdvisorModal(): void {
+    this.showCreateAdvisorModal = true;
+  }
+
+  closeCreateAdvisorModal(): void {
+    this.showCreateAdvisorModal = false;
+    this.newAdvisor = {};
+  }
+
+  createNewAdvisor(): void {
+    this.http.post('https://api.example.com/create-advisor', this.newAdvisor).subscribe(
+      () => {
+        this.closeCreateAdvisorModal();
+        this.fetchApplyingAdvisors();
+      },
+      error => console.error('Error creating advisor', error)
+    );
   }
 }

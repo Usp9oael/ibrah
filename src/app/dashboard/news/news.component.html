@@ -15,7 +15,7 @@
         <h3 class="text-xl font-bold text-gray-900">{{ article.title }}</h3>
         <p class="text-gray-700">{{ article.description }}</p>
         <img *ngIf="article.imageUrl" [src]="article.imageUrl" alt="{{ article.title }}" class="my-2 rounded-md" (error)="article.imageUrl = 'path_to_default_image.jpg'">
-        <a *ngIf="article.url" href="{{ article.url }}" target="_blank" class="block text-blue-600 hover:underline">Learn More</a>
+        <a *ngIf="article.url" [href]="article.url" target="_blank" class="block text-blue-600 hover:underline">Learn More</a>
       </div>
     </div>
     <div *ngIf="newsData && newsData.length === 0" class="text-gray-600 text-center">No news available.</div>
