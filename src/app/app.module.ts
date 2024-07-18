@@ -12,7 +12,6 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
-import { SettingsComponent } from './dashboard/settings/settings.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { DashboardNavComponent } from './shared/dashboard-nav/dashboard-nav.component';
@@ -35,6 +34,8 @@ import { FooterComponent } from './dashboard/footer/footer.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TransactionsComponent } from './dashboard/transactions/transactions.component';
+import { TransactionmodalComponent } from './dashboard/transactionmodal/transactionmodal.component';
+import { WithdrawComponent } from './dashboard/withdraw/withdraw.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,6 @@ import { TransactionsComponent } from './dashboard/transactions/transactions.com
     DashboardLayoutComponent,
     HomeComponent,
     ProfileComponent,
-    SettingsComponent,
     LoginComponent,
     RegisterComponent,
     DashboardNavComponent,
@@ -65,7 +65,9 @@ import { TransactionsComponent } from './dashboard/transactions/transactions.com
     FooterComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    TransactionmodalComponent,
+    WithdrawComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,33 @@
+<div class=" inset-0 bg-black/40 fixed h-screen w-screen flex items-center justify-center"  *ngIf="isVisible">
+    <div class=" bg-white p-4 relative">
+        <button (click)="closeModal()" class=" absolute left-0 top-0 p-3">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="12" fill="#E0E0E0"/>
+                <path d="M15 9L9 15" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M9 9L15 15" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+        </button>
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class=" flex flex-col gap-4 mt-10">
+            <div class="mb-4">
+              <label for="phone_number" class="block text-gray-700">Phone Number</label>
+              <input type="number" id="phone_number" formControlName="phone_number" class="w-full p-2 border border-gray-300  mt-1" />
+            </div>
+            <div class="mb-4">
+                <label for="account_name" class="block text-gray-700">Acc. number</label>
+                <input type="number" id="account_number" formControlName="account_number" class="w-full p-2 border border-gray-300  mt-1" />
+              </div>
+              <div class="mb-4">
+                <label for="amount" class="block text-gray-700">Amount</label>
+                <input type="number" id="amount" formControlName="amount" class="w-full p-2 border border-gray-300  mt-1" />
+              </div>
+              <div class="mb-4">
+                <label for="date" class="block text-gray-700">Date</label>
+                <input type="datetime-local" id="date" formControlName="date" class="w-full p-2 border border-gray-300  mt-1" />
+              </div>
+              <div>
+                <button type="submit" class="bg-slate-950 w-full text-white p-2 md:py-3 mb-2" (click)="closeModal()">Create Transaction</button>
+                    <button class="bg-slate-600 w-full text-white p-2 md:py-3 mb-2" (click)="closeModal()">Cancel</button>
+              </div>
+            </form>
+    </div>
+</div>
