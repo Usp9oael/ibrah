@@ -1,67 +1,153 @@
-<div class="mx-5 p-4">
-  <div class="flex items-center justify-between w-full">
-    <h2 class="text-2xl font-bold mb-4">Manage Advisors</h2>
-    <button (click)="openCreateAdvisorModal()" class="bg-slate-950 text-white px-4 py-3 transition-colors duration-300">
-      Add Financial Advisor
-    </button>
-  </div>
+<div class="flex flex-col relative">
+<div class="flex items-center  justify-end mx-5 mb-4">
+  <!-- Search criteria and buttons -->
+  <button class="bg-slate-950 text-white font-normal py-2 px-4" type="button" (click)="toggleCreateAdvisorForm()">
+    Add Financial Advisor
+  </button>
+</div>
 
-  <!-- Display Applying Advisors -->
-  <div>
-    <h3 class="text-xl font-bold mb-2">Applying Advisors</h3>
-    <ul>
-      <li *ngFor="let advisor of applyingAdvisors" class="my-2 bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
-        <div>
-          <span class="font-bold text-teal-500">{{ advisor.name }}</span> - {{ advisor.email }}
-        </div>
-        <div>
-          <button (click)="acceptAdvisor(advisor.id)" class="text-green-500 hover:text-green-700 ml-2">
-            Accept
-          </button>
-          <button (click)="rejectAdvisor(advisor.id)" class="text-red-500 hover:text-red-700 ml-2">
-            Reject
-          </button>
-        </div>
-      </li>
-    </ul>
+<!-- Applying Advisors Section -->
+<div class="overflow-x-auto mx-5">
+  <h2 class="text-2xl font-bold mb-4">Applying Advisors</h2>
+  <div class="min-w-full bg-white shadow-md overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="py-2 px-4">ID</th>
+          <th class="py-2 px-4">First Name</th>
+          <th class="py-2 px-4">Last Name</th>
+          <th class="py-2 px-4">Gender</th>
+          <th class="py-2 px-4">ID Number</th>
+          <th class="py-2 px-4">Phone Number</th>
+          <th class="py-2 px-4">Email</th>
+          <th class="py-2 px-4">Profession</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let advisor of applyingAdvisors">
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.id }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.firstName }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.lastName }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.gender }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.idNumber }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.phoneNumber }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.email }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.profession }}</td>
+          <td class="py-2 px-4">
+            <button (click)="acceptAdvisor(advisor.id)" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2">
+              Accept
+            </button>
+            <button (click)="rejectAdvisor(advisor.id)" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Reject
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
 
-  <!-- Display Approved Advisors -->
-  <div>
-    <h3 class="text-xl font-bold mb-2">Approved Advisors</h3>
-    <ul>
-      <li *ngFor="let advisor of approvedAdvisors" class="my-2 bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
-        <div>
-          <span class="font-bold text-teal-500">{{ advisor.name }}</span> - {{ advisor.email }}
-        </div>
-      </li>
-    </ul>
+<!-- Approved Advisors Section -->
+<div class="overflow-x-auto mx-5 mt-8">
+  <h2 class="text-2xl font-bold mb-4">Approved Advisors</h2>
+  <div class="min-w-full bg-white shadow-md overflow-hidden">
+    <table class="min-w-full">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="py-2 px-4">ID</th>
+          <th class="py-2 px-4">First Name</th>
+          <th class="py-2 px-4">Last Name</th>
+          <th class="py-2 px-4">Gender</th>
+          <th class="py-2 px-4">ID Number</th>
+          <th class="py-2 px-4">Phone Number</th>
+          <th class="py-2 px-4">Email</th>
+          <th class="py-2 px-4">Profession</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let advisor of approvedAdvisors">
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.id }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.firstName }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.lastName }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.gender }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.idNumber }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.phoneNumber }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.email }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ advisor.profession }}</td>
+          <td class="py-2 px-4">
+            <!-- Add actions buttons if needed -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
 
-  <!-- Modal for Adding New Financial Advisor -->
-  <div *ngIf="showCreateAdvisorModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-    <div class="bg-white rounded-lg p-6 w-1/2 shadow-xl">
-      <h3 class="text-2xl font-bold mb-4 text-gray-900">Add Financial Advisor</h3>
-      <form (submit)="createNewAdvisor()" class="space-y-4">
-        <div>
-          <label for="name" class="block text-sm font-medium mb-2 text-gray-700">Name:</label>
-          <input type="text" id="name" name="name" [(ngModel)]="newAdvisor.name" required
-                 class="border border-gray-300 p-3 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
-        <div>
-          <label for="email" class="block text-sm font-medium mb-2 text-gray-700">Email:</label>
-          <input type="email" id="email" name="email" [(ngModel)]="newAdvisor.email" required
-                 class="border border-gray-300 p-3 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        </div>
-        <div class="flex justify-end">
-          <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300">
-            Add
-          </button>
-          <button type="button" (click)="closeCreateAdvisorModal()" class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition-colors duration-300">
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+<!-- Add Financial Advisor Form -->
+<div class="p-24 inset-0 backdrop:blur-md fixed z-50 flex items-center justify-center h-screen" *ngIf="showCreateAdvisorForm">s
+  <div class="bg-white h-[500px] w-[500px] overflow-y-scroll  shadow-md rounded px-8 pt-6 pb-8">
+    <h2 class="text-2xl font-bold mb-4">Add Financial Advisor</h2>
+    <form>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="firstName">
+          First Name
+        </label>
+        <input class="w-full p-2 border border-gray-300  mt-1" id="firstName" type="text" placeholder="First Name">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="lastName">
+          Last Name
+        </label>
+        <input class="w-full p-2 border border-gray-300  mt-1" id="lastName" type="text" placeholder="Last Name">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="gender">
+          Gender
+        </label>
+        <select class="w-full p-2 border border-gray-300  mt-1" id="gender">
+          <option>Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="idNumber">
+          ID Number
+        </label>
+        <input class="w-full p-2 border border-gray-300  mt-1" id="idNumber" type="text" placeholder="ID Number">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="phoneNumber">
+          Phone Number
+        </label>
+        <input class="w-full p-2 border border-gray-300  mt-1" id="phoneNumber" type="tel" placeholder="Phone Number">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          Email
+        </label>
+        <input class="w-full p-2 border border-gray-300  mt-1" id="email" type="email" placeholder="Email">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="profession">
+          Profession
+        </label>
+        <input class="w-full p-2 border border-gray-300  mt-1" id="profession" type="text" placeholder="Profession">
+      </div>
+      <!-- Add more fields as needed -->
+
+      <div class="flex items-center justify-between">
+        <button class="bg-slate-950 text-white font-normal py-2 px-4" type="button">
+          Add Advisor
+        </button>
+        <button (click)="closeCreateAdvisorForm()" class="bg-slate-800 text-white font-normal py-2 px-4">
+          Cancel
+        </button>
+      </div>
+    </form>
   </div>
+</div>
 </div>

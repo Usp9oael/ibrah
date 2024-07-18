@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { User } from '../../../types/user.model'; // Adjust the import path as necessary
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserFetchService {
-  private url = 'https://investmentapp.onrender.com';
+  private url = 'https://investmentapp-1.onrender.com';
 
   constructor(private httpClient: HttpClient) {}
 
@@ -36,13 +37,18 @@ export class UserFetchService {
       );
   }
 
+  // Implementing getUserById
+  public getUserById(userId: string): Observable<User> {
+    return this.getRequest('/api/fetchUsers', userId) as Observable<User>;
+  }
+
   public deleteUser(userId: number): Observable<any> {
     const headers = new HttpHeaders({
       "Content-Type": "application/json",
       "ngrok-skip-browser-warning": ""
     });
-    const url = `${this.url}/api/fetchUsers/${userId}`;
-    return this.httpClient.delete(url, { headers })
+    const deleteUrlWithId = `${this.url}/api/fetchUsers/${userId}`;
+    return this.httpClient.delete(deleteUrlWithId, { headers })
       .pipe(
         catchError(this.handleError)
       );
@@ -51,9 +57,11 @@ export class UserFetchService {
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';
     if (error.error instanceof ErrorEvent) {
+      // Client-side error
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}\nBody: ${error.error.text}`;
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}\nBody: ${error.error?.text || JSON.stringify(error.error)}`;
     }
     console.error(errorMessage);
     return throwError(errorMessage);

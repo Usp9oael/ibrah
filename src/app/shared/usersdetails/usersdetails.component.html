@@ -1,1 +1,27 @@
-<p>usersdetails works!</p>
+<div class="user-details-container p-4">
+    <h2 class="text-xl font-semibold mb-4">User Details</h2>
+    
+    <div *ngIf="user">
+      <p><strong>ID:</strong> {{ user.id }}</p>
+      <p><strong>First Name:</strong> {{ user.firstName }}</p>
+      <p><strong>Middle Name:</strong> {{ user.middleName }}</p>
+      <p><strong>Surname:</strong> {{ user.surname }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Nationality:</strong> {{ user.nationality }}</p>
+      <p><strong>Postal Address:</strong> {{ user.postalAddress }}</p>
+      <p><strong>Account Name:</strong> {{ user.accountName }}</p>
+      <p><strong>Account Number:</strong> {{ user.accountNumber }}</p>
+      <p><strong>Account Type:</strong> {{ user.accountType }}</p>
+      <p><strong>Bank Name:</strong> {{ user.bankName }}</p>
+      <p><strong>Branch:</strong> {{ user.branch }}</p>
+      <p><strong>Bank Code:</strong> {{ user.bankCode }}</p>
+      <p><strong>Next of Kin:</strong> {{ user.nextOfKin.name }} ({{ user.nextOfKin.relationship }})</p>
+    </div>
+    
+    <div *ngIf="!user" class="text-red-500">
+      <p>User details not available.</p>
+    </div>
+    
+    <button class="mt-4 p-2 bg-teal-500 text-white rounded" (click)="goBack()">Back</button>
+  </div>
+  

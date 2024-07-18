@@ -3,12 +3,11 @@ import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class UserAuthService {
-  private url: string = "https://investmentapp.onrender.com";
+  private url: string = "https://investmentapp-1.onrender.com";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -47,9 +46,17 @@ export class UserAuthService {
   }
 
   public fetchUsers(token: string | null, userId?: string): Observable<any> {
-    return this.getRequest('/api/fetchUsers', userId || null);
+    return this.getRequest('/api/fetchUsers', token);
   }
-  
-  
-  
+
+  public getProfile(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Example token header
+      'ngrok-skip-browser-warning': ""
+    });
+    return this.httpClient.get(`${this.url}/api/admins/1`, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 }

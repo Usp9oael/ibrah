@@ -11,16 +11,24 @@
             <small class="text-red-500">{{ validationErrors }}</small>
           </p>
           <div class="mb-4">
+            <label for="userName" class="sr-only">Username</label>
+            <input type="text" id="userName" name="userName" required ngModel placeholder="Username" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
+          </div>
+          <div class="mb-4">
             <label for="email" class="sr-only">Email</label>
             <input type="email" id="email" name="email" required ngModel placeholder="Email address" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
           </div>
           <div class="mb-4">
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" required ngModel placeholder="Password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
+            <label for="phoneNumber" class="sr-only">Phone Number</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" required ngModel placeholder="Phone Number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
           </div>
           <div class="mb-4">
-            <label for="confirmPassword" class="sr-only">Confirm Password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required ngModel placeholder="Confirm Password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
+            <label for="idNumber" class="sr-only">ID Number</label>
+            <input type="text" id="idNumber" name="idNumber" required ngModel placeholder="ID Number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
+          </div>
+          <div class="mb-4">
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" required ngModel placeholder="Password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
           </div>
           <div class="flex items-center justify-center">
             <button [disabled]="loading" [ngClass]="{

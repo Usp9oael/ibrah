@@ -1,7 +1,5 @@
-// fund.service.ts
-
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Fund } from '../../../types/fund.model';
@@ -11,23 +9,25 @@ import { Fund } from '../../../types/fund.model';
 })
 export class FundsService {
 
-  private baseUrl = 'https://investmentapp.onrender.com/api/funds';
+  private baseUrl = 'https://investmentapp-1.onrender.com/api/funds';
 
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
+      // Client-side error
       errorMessage = `Error: ${error.error.message}`;
     } else {
+      // Server-side error
       errorMessage = `Server returned code: ${error.status}, error message is: ${error.message}`;
     }
     console.error(errorMessage);
     return throwError(errorMessage);
   }
 
-  getAllFunds(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl).pipe(
+  getAllFunds(): Observable<Fund[]> {
+    return this.http.get<Fund[]>(this.baseUrl).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error(
           `Backend returned code ${error.status}, ` +
@@ -45,13 +45,17 @@ export class FundsService {
   }
 
   createFund(fund: Fund): Observable<Fund> {
-    return this.http.post<Fund>(this.baseUrl, fund).pipe(
+    return this.http.post<Fund>(this.baseUrl, fund, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteFund(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(
+    return this.http.delete<void>(`${this.baseUrl}/${id}api/data`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }).pipe(
       catchError(this.handleError)
     );
   }

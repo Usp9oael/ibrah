@@ -1,6 +1,7 @@
+// reset-password.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../service/auth.service'; // Update this path to match the location of AuthService
 
 @Component({
   selector: 'app-reset-password',
@@ -8,6 +9,7 @@ import { AuthService } from '../service/auth.service';
   styleUrls: ['./reset-password.component.css']
 })
 export class ResetPasswordComponent {
+  step: 'requestOtp' | 'verifyOtp' | 'resetPassword' = 'requestOtp';
   email: string = '';
   otp: string = '';
   newPassword: string = '';
@@ -17,71 +19,42 @@ export class ResetPasswordComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  /**
-   * Request OTP for password reset.
-   */
   requestOtp() {
     this.authService.requestOtp(this.email).subscribe(
-      () => {
-        this.message = 'OTP sent successfully';
+      response => {
+        this.step = 'verifyOtp';
       },
-      (error) => {
-        this.errorMessage = this.extractErrorMessage(error);
-        console.error('Error requesting OTP:', error); // Log the error for debugging
+      error => {
+        this.errorMessage = 'Error requesting OTP';
       }
     );
   }
 
-  /**
-   * Verify OTP for password reset.
-   */
   verifyOtp() {
     this.authService.verifyOtp(this.email, this.otp).subscribe(
-      () => {
-        this.message = 'OTP verified successfully';
+      response => {
+        this.step = 'resetPassword';
       },
-      (error) => {
-        this.errorMessage = this.extractErrorMessage(error);
-        console.error('Error verifying OTP:', error); // Log the error for debugging
+      error => {
+        this.errorMessage = 'Error verifying OTP';
       }
     );
   }
 
-  /**
-   * Confirm password reset.
-   */
   resetPassword() {
     if (this.newPassword !== this.confirmPassword) {
       this.errorMessage = 'Passwords do not match';
       return;
     }
 
-    this.authService.confirmResetPassword(this.email, this.otp, this.newPassword).subscribe(
-      () => {
-        this.message = 'Password reset successful';
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 2000);
+    this.authService.resetPassword(this.email, this.otp, this.newPassword).subscribe(
+      response => {
+        this.message = 'Password reset successfully';
+        this.router.navigate(['/login']);
       },
-      (error) => {
-        this.errorMessage = this.extractErrorMessage(error);
-        console.error('Error resetting password:', error); // Log the error for debugging
+      error => {
+        this.errorMessage = 'Error resetting password';
       }
     );
-  }
-
-  /**
-   * Extract error message from HttpErrorResponse.
-   * @param error HttpErrorResponse object containing error details.
-   * @returns Error message string.
-   */
-  private extractErrorMessage(error: any): string {
-    if (error.error && error.error.message) {
-      return error.error.message;
-    } else if (error.message) {
-      return error.message;
-    } else {
-      return 'An error occurred. Please try again later.';
-    }
   }
 }

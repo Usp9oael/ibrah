@@ -11,20 +11,15 @@ export class RegisterComponent {
   loading = false;
   statusMessage = 'Register'; 
   errorMessage = ''; 
-validationErrors: any;
+  validationErrors: any;
 
   constructor(private userAuthService: UserAuthService, private router: Router) { }
 
   register(form: any) {
     this.loading = true;
     this.statusMessage = 'Signing up...';
-    const { email, password, confirmPassword } = form.value;
-    if (password !== confirmPassword) {
-      console.error('Passwords do not match');
-      return;
-    }
-    // /api/admins/register
-    this.userAuthService.postRequest('/api/open/registration/register', { email, password }, null).subscribe(
+    const { userName, email, phoneNumber, idNumber, password } = form.value;
+    this.userAuthService.postRequest('/api/admins/register', { userName, email, phoneNumber, idNumber, password }, null).subscribe(
       (response) => {
         console.log('Registration successful', response);
         this.loading = false;
@@ -34,7 +29,6 @@ validationErrors: any;
       (error) => {
         console.error('Registration failed', error);
         this.loading = false;
-        // this.statusMessage = 'retry';
         this.errorMessage = 'Oops!';
         console.log(error);
       }

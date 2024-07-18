@@ -1,59 +1,27 @@
+// auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://investmentapp.onrender.com/api/admins';
+  private apiUrl = 'https://investmentapp-1.onrender.com'; // Your API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  /**
-   * Request OTP for password reset.
-   * @param email Email address for OTP request.
-   * @returns Observable<any> containing the response from the API.
-   */
   requestOtp(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reset-password/request`, { email }).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.post(`${this.apiUrl}/api/admins/reset-password/request`, { email });
   }
 
-  /**
-   * Verify OTP for password reset.
-   * @param email Email address of the user.
-   * @param otp One-time password to verify.
-   * @returns Observable<any> containing the response from the API.
-   */
   verifyOtp(email: string, otp: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reset-password/verify-otp`, { email, otp }).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.post(`${this.apiUrl}/api/admins/reset-password/verify-otp`, { email, otp });
   }
 
-  /**
-   * Confirm password reset.
-   * @param email Email address of the user.
-   * @param otp One-time password used for verification.
-   * @param newPassword New password to set.
-   * @returns Observable<any> containing the response from the API.
-   */
-  confirmResetPassword(email: string, otp: string, newPassword: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/reset-password/confirm`, { email, otp, newPassword }).pipe(
-      catchError(this.handleError)
-    );
+  resetPassword(email: string, otp: string, newPassword: string): Observable<any> {
+    const payload = { email, otp, newPassword };
+    return this.http.post<any>('https://investmentapp-1.onrender.com/api/admins/reset-password/confirm', payload);
   }
-
-  /**
-   * Handle HTTP error responses.
-   * @param error HttpErrorResponse object containing error details.
-   * @returns Observable throwError with a generic error message.
-   */
-  private handleError(error: HttpErrorResponse): Observable<any> {
-    console.error('An error occurred:', error);
-    return throwError('Something went wrong; please try again later.');
-  }
+  
 }

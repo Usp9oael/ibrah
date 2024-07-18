@@ -9,15 +9,16 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
 import { ProductsComponent } from './dashboard/products/products.component';
-import { MessagesComponent } from './dashboard/messages/messages.component';
+import { MessagesComponent } from '././dashboard/messages/messages.component';
 import { UsersComponent } from './dashboard/users/users.component';
 import { CreateUserComponent } from './children/create-user/create-user.component';
 import { UpdateUserComponent } from './children/update-user/update-user.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
-import { UsersdetailsComponent } from './shared/usersdetails/usersdetails.component';
+import { UserDetailsComponent } from './shared/usersdetails/usersdetails.component';
 import { NewsComponent } from './dashboard/news/news.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TransactionsComponent } from './dashboard/transactions/transactions.component';
 
 const routes: Routes = [
   // Default redirect to login page
@@ -47,6 +48,7 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent, data: { breadcrumb: 'Products' } },
       { path: 'messages', component: MessagesComponent, data: { breadcrumb: 'Messages' } },
       { path: 'news', component: NewsComponent, data: { breadcrumb: 'News' } },
+      { path: 'transactions', component: TransactionsComponent, data: { breadcrumb: 'Transactions' } },
 
       // Routes under the UserLayoutComponent
       {
@@ -57,7 +59,7 @@ const routes: Routes = [
           { path: '', component: UsersComponent, data: { breadcrumb: '' } },
           { path: 'create_user', component: CreateUserComponent, data: { breadcrumb: 'Create User' } },
           { path: 'update_user/:id', component: UpdateUserComponent, data: { breadcrumb: 'Update User' } },
-          { path: 'users_details/:id', component: UsersdetailsComponent },
+          { path: 'view-user/:id', component: UserDetailsComponent, data: { breadcrumb: 'View User'} },
         ],
       },
     ],

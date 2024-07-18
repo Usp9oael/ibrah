@@ -29,11 +29,12 @@ import { UserLayoutComponent } from './layouts/user-layout/user-layout.component
 import { HidePasswordPipe } from './pipes/hide-password.pipe';
 import { CreateuserdialogComponent } from './shared/createuserdialog/createuserdialog.component';
 import { MessageDialogComponent } from './shared/message-dialog/message-dialog.component';
-import { UsersdetailsComponent } from './shared/usersdetails/usersdetails.component';
+import { UserDetailsComponent } from './shared/usersdetails/usersdetails.component';
 import { NewsComponent } from './dashboard/news/news.component';
 import { FooterComponent } from './dashboard/footer/footer.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { TransactionsComponent } from './dashboard/transactions/transactions.component';
 
 @NgModule({
   declarations: [
@@ -59,11 +60,12 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     HidePasswordPipe,
     CreateuserdialogComponent,
     MessageDialogComponent,
-    UsersdetailsComponent,
+    UserDetailsComponent,
     NewsComponent,
     FooterComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    TransactionsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,100 @@
+<div class="flex items-center justify-between mx-5">
+    <div class="flex items-center space-x-4 mb-4">
+      <select id="searchCriteria" class="px-2 py-2 border">
+        <option value="accountNumber">Account Number</option>
+        <option value="description">Description</option>
+        <option value="financialAdvisor">Financial Advisor</option>
+      </select>
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Enter search term" class="px-2 py-2 border">
+      <button (click)="searchUsers()" class="px-4 py-2 bg-slate-950 text-neutral-100">Search</button>
+    </div>
+    
+    <div class="mb-4">
+      <button (click)="openModal()" class="px-4 py-2 bg-slate-950 text-neutral-100">
+        Create Transactions
+      </button>
+      <app-createuserdialog [isVisible]="isModalVisible" (close)="closeModal()"></app-createuserdialog>
+    </div>
+  </div>
+  
+  <div class="overflow-x-auto mx-5">
+    <table class="min-w-full bg-white shadow-md overflow-hidden">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="py-2 px-4">Account Number</th>
+          <th class="py-2 px-4">Description</th>
+          <th class="py-2 px-4">Financial Advisor</th>
+          <th class="py-2 px-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers">
+          <td class="py-2 px-4 cursor-pointer">{{ user.accountNumber }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ user.description }}</td>
+          <td class="py-2 px-4 cursor-pointer">{{ user.financialAdvisor }}</td>
+          <td class="py-2 px-4">
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+                    (click)="openAccountDetails(user.accountNumber)">
+              Account
+            </button>
+            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
+                    (click)="openWithdrawForm(user.accountNumber)">
+              Withdraw
+            </button>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    (click)="viewUserDetails(user.id)">
+              Edit
+            </button>
+            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    (click)="deleteUser(user.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Account Details Modal -->
+  <div *ngIf="isAccountDetailsVisible" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-5 rounded shadow-md w-1/2">
+      <h2 class="text-lg font-bold mb-4">Account Details</h2>
+      <p><strong>Account Number:</strong> {{ accountDetails.accountNumber }}</p>
+      <p><strong>Fund Name:</strong> {{ accountDetails.fundName }}</p>
+      <p><strong>Account Balance:</strong> {{ accountDetails.accountBalance }}</p>
+      <p><strong>Interest Earned:</strong> {{ accountDetails.interestEarned }}</p>
+      <button (click)="closeAccountDetails()" class="px-4 py-2 bg-slate-950 text-neutral-100">Close</button>
+    </div>
+  </div>
+  
+  <!-- Withdraw Form Modal -->
+  <div *ngIf="isWithdrawFormVisible" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white p-5 rounded shadow-md w-1/2">
+      <h2 class="text-lg font-bold mb-4">Withdraw Request</h2>
+      <form (ngSubmit)="submitWithdrawRequest()">
+        <div class="mb-4">
+          <label class="block mb-2">Account Number</label>
+          <input type="text" [(ngModel)]="withdrawRequest.accountNumber" class="px-2 py-2 border w-full" readonly>
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2">Total Balance</label>
+          <input type="text" [(ngModel)]="withdrawRequest.totalBalance" class="px-2 py-2 border w-full">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2">Payment Method</label>
+          <input type="text" [(ngModel)]="withdrawRequest.paymentMethod" class="px-2 py-2 border w-full">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2">Bank Details</label>
+          <input type="text" [(ngModel)]="withdrawRequest.bankDetails" class="px-2 py-2 border w-full">
+        </div>
+        <div class="mb-4">
+          <label class="block mb-2">Reason</label>
+          <textarea [(ngModel)]="withdrawRequest.reason" class="px-2 py-2 border w-full"></textarea>
+        </div>
+        <button type="submit" class="px-4 py-2 bg-slate-950 text-neutral-100">Send Request</button>
+        <button type="button" (click)="closeWithdrawForm()" class="px-4 py-2 bg-gray-500 text-neutral-100">Cancel</button>
+      </form>
+    </div>
+  </div>
+  

@@ -26,8 +26,7 @@ export class LoginComponent {
     this.loading = true;
     this.statusMessage = 'Signing in...';
 
-    // Assuming userAuthService.postRequest returns an Observable
-    this.userAuthService.postRequest('/api/open/registration/login', { email, password }, null).subscribe(
+    this.userAuthService.postRequest('/api/admins/login', { email, password }, null).subscribe(
       (response: any) => {
         console.log('Login successful', response);
         this.loading = false;
@@ -38,7 +37,7 @@ export class LoginComponent {
         console.error('Login failed', error);
         this.loading = false;
         this.errorMessage = 'Login failed. Please try again.';
-        console.log(error);
+        console.log(error.status);
       }
     );
   }

@@ -40,7 +40,7 @@ export class UsersComponent implements OnInit {
   }
 
   viewUserDetails(userId: number) {
-    this.router.navigate(['/view-user', userId]); // Replace with your actual route for viewing user details
+    this.router.navigate(['/view-user', userId]);
   }
 
   searchUsers() {
@@ -93,13 +93,12 @@ export class UsersComponent implements OnInit {
       this.userFetchService.deleteUser(userId).subscribe(
         () => {
           console.log(`User ${userId} deleted successfully.`);
-          // Remove the deleted user from the local list
           this.users = this.users.filter(user => user.id !== userId);
-          this.filteredUsers = [...this.users]; // Update filtered users
+          this.filteredUsers = [...this.users]; 
         },
         (error: HttpErrorResponse) => {
           console.error(`Error deleting user ${userId}:`, error);
-          // Handle error deleting user
+          alert(`Error deleting user: ${error.message}`);
         }
       );
     }
