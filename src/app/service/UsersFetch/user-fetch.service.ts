@@ -8,7 +8,7 @@ import { User } from '../../../types/user.model'; // Adjust the import path as n
   providedIn: 'root'
 })
 export class UserFetchService {
-  private url = 'https://investmentapp-1.onrender.com';
+  private url = 'https://ef8f-41-80-112-189.ngrok-free.app';
 
   constructor(private httpClient: HttpClient) {}
 

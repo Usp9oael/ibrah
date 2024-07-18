@@ -1,96 +1,97 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionsService } from '../../service/transactions.service';
 import { Transaction } from './transaction'; // Adjust this path if necessary
+import { UserFetchService } from '../../service/UsersFetch/user-fetch.service';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.css']
 })
-export class TransactionsComponent implements OnInit {
-searchUsers() {
-throw new Error('Method not implemented.');
-}
-viewUserDetails(arg0: any) {
-throw new Error('Method not implemented.');
-}
-deleteUser(arg0: any) {
-throw new Error('Method not implemented.');
-}
-  searchQuery: string = '';
-  filteredTransactions: Transaction[] = [];
+export class TransactionsComponent  {
   isModalVisible: boolean = false;
-  isAccountDetailsVisible: boolean = false;
-  isWithdrawFormVisible: boolean = false;
-  accountDetails: any = {};
-  withdrawRequest: any = {};
-filteredUsers: any;
+  payments: any[] = [];
+  filteredPayments: any[] = [];
+  searchQuery: string = '';
+  searchCriteria: string = 'id';
 
-  constructor(private transactionsService: TransactionsService) { }
+  constructor(private userFetchService: UserFetchService, private router: Router) { }
 
   ngOnInit(): void {
-    this.loadTransactions();
+    this.fetchUsers();
   }
 
-  loadTransactions(): void {
-    this.transactionsService.getTransactions().subscribe(transactions => {
-      this.filteredTransactions = transactions;
+  fetchUsers(): void {
+    this.userFetchService.getRequest('/api/open/admin/payments').subscribe(
+      (payments: any[]) => {
+        this.payments = payments;
+        this.filteredPayments = [...this.payments];
+        console.log("Fetched Payments", payments);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error fetching users', error);
+        if (error.error instanceof ErrorEvent) {
+          console.error('Client-side error:', error.error.message);
+        } else {
+          console.error(`Backend returned code ${error.status}, body was: ${error.error.text}`);
+        }
+      }
+    );
+  }
+  searchUsers() {
+    if (!this.searchQuery.trim()) {
+      this.filteredPayments = [...this.payments];
+      return;
+    }
+
+    this.filteredPayments = this.payments.filter(payment => {
+      const searchTerm = this.searchQuery.toLowerCase();
+      switch (this.searchCriteria) {
+        case 'id':
+          return payment.id.toString().toLowerCase().includes(searchTerm);
+        case 'Phone Number':
+          return payment.phone_number.toLowerCase().includes(searchTerm);
+        case 'Account Name':
+          return payment.account_name.toLowerCase().includes(searchTerm);
+        case 'Amount':
+          return payment.amount.toLowerCase().includes(searchTerm);
+        case 'Timestamp':
+          return payment.Timestamp.toLowerCase().includes(searchTerm);
+        case 'Financial Advisor':
+          return payment.financialAdvisor.toLowerCase().includes(searchTerm);
+        case 'description':
+          return payment.description.toLowerCase().includes(searchTerm);
+        case 'Account Number':
+          return payment.account_number.toLowerCase().includes(searchTerm);
+        default:
+          return false;
+      }
     });
   }
 
-  searchTransactions(): void {
-    const criteria = (document.getElementById('searchCriteria') as HTMLSelectElement).value;
-    this.transactionsService.searchTransactions(criteria, this.searchQuery).subscribe(transactions => {
-      this.filteredTransactions = transactions;
-    });
+  deleteUser(userId: number) {
+    if (confirm(`Are you sure you want to delete user ${userId}?`)) {
+      this.userFetchService.deleteUser(userId).subscribe(
+        () => {
+          console.log(`User ${userId} deleted successfully.`);
+          this.payments = this.payments.filter(user => user.id !== userId);
+          this.filteredPayments = [...this.payments]; 
+        },
+        (error: HttpErrorResponse) => {
+          console.error(`Error deleting user ${userId}:`, error);
+          alert(`Error deleting user: ${error.message}`);
+        }
+      );
+    }
   }
 
-  openModal(): void {
+  openModal() {
     this.isModalVisible = true;
   }
 
-  closeModal(): void {
+  closeModal() {
     this.isModalVisible = false;
-  }
-
-  viewTransactionDetails(transactionId: string): void {
-    // Logic to view transaction details
-  }
-
-  deleteTransaction(transactionId: string): void {
-    // Logic to delete transaction
-  }
-
-  openAccountDetails(accountNumber: string): void {
-    this.transactionsService.getAccountDetails(accountNumber).subscribe(details => {
-      this.accountDetails = details;
-      this.isAccountDetailsVisible = true;
-    });
-  }
-
-  closeAccountDetails(): void {
-    this.isAccountDetailsVisible = false;
-  }
-
-  openWithdrawForm(accountNumber: string): void {
-    this.withdrawRequest = {
-      accountNumber: accountNumber,
-      totalBalance: '',
-      paymentMethod: '',
-      bankDetails: '',
-      reason: ''
-    };
-    this.isWithdrawFormVisible = true;
-  }
-
-  closeWithdrawForm(): void {
-    this.isWithdrawFormVisible = false;
-  }
-
-  submitWithdrawRequest(): void {
-    this.transactionsService.submitWithdrawRequest(this.withdrawRequest).subscribe(response => {
-      // Handle response
-      this.isWithdrawFormVisible = false;
-    });
   }
 }

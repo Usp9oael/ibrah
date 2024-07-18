@@ -4,7 +4,6 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './dashboard/home/home.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
-import { SettingsComponent } from './dashboard/settings/settings.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
 import { AnalyticsComponent } from './dashboard/analytics/analytics.component';
@@ -19,6 +18,7 @@ import { NewsComponent } from './dashboard/news/news.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TransactionsComponent } from './dashboard/transactions/transactions.component';
+import { WithdrawComponent } from './dashboard/withdraw/withdraw.component';
 
 const routes: Routes = [
   // Default redirect to login page
@@ -43,7 +43,7 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
       { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Profile' } },
-      { path: 'settings', component: SettingsComponent, data: { breadcrumb: 'Settings' } },
+      { path: 'withdrawal_requests', component: WithdrawComponent, data: { breadcrumb: 'Withdrawal Requests' } },
       { path: 'analytics', component: AnalyticsComponent, data: { breadcrumb: 'Analytics' } },
       { path: 'products', component: ProductsComponent, data: { breadcrumb: 'Products' } },
       { path: 'messages', component: MessagesComponent, data: { breadcrumb: 'Messages' } },
