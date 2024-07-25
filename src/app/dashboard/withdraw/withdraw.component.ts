@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-withdraw',
   templateUrl: './withdraw.component.html',
-  styleUrl: './withdraw.component.css'
+  styleUrls: ['./withdraw.component.css']
 })
 export class WithdrawComponent implements OnInit {
   withdrawals: any[] = [];
@@ -16,7 +16,7 @@ export class WithdrawComponent implements OnInit {
   }
 
   getWithdrawals(): void {
-    this.http.get<any[]>('https://ngrok_api/withdrawals')
+    this.http.get<any[]>('https://smartinvest.onrender.com/api/open/admins/withdrawals/pending')
       .subscribe(data => {
         this.withdrawals = data;
       }, error => {
@@ -25,12 +25,23 @@ export class WithdrawComponent implements OnInit {
   }
 
   approveWithdrawal(id: number): void {
-    this.http.post(`https://ngrok_api/withdrawals/${id}/approve`, {})
+    this.http.post(`https://smartinvest.onrender.com/api/open/admins/withdrawals/pending/accept/${id}`, {})
       .subscribe(response => {
         console.log('Withdrawal approved', response);
-        this.getWithdrawals();
+        this.getWithdrawals(); // Refresh the list of withdrawals after approving one
       }, error => {
         console.error('Error approving withdrawal', error);
       });
   }
+
+  rejectWithdrawal(id: number): void {
+    this.http.delete(`https://smartinvest.onrender.com/api/open/admins/withdrawals/pending/reject/${id}`)
+      .subscribe(response => {
+        console.log('Withdrawal rejected', response);
+        this.getWithdrawals(); // Refresh the list of withdrawals after rejecting one
+      }, error => {
+        console.error('Error rejecting withdrawal', error);
+      });
+  }
+  
 }

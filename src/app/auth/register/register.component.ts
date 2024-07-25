@@ -19,7 +19,7 @@ export class RegisterComponent {
     this.loading = true;
     this.statusMessage = 'Signing up...';
     const { userName, email, phoneNumber, idNumber, password } = form.value;
-    this.userAuthService.postRequest('/api/admins/register', { userName, email, phoneNumber, idNumber, password }, null).subscribe(
+    this.userAuthService.postRequest('/api/open/admins/register', { userName, email, phoneNumber, idNumber, password }, null).subscribe(
       (response) => {
         console.log('Registration successful', response);
         this.loading = false;

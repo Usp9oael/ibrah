@@ -49,6 +49,11 @@
         <th class="py-2 px-4">Branch</th>
         <th class="py-2 px-4">Bank Code</th>
         <th class="py-2 px-4">Next of Kin</th>
+        <th class="py-2 px-4">Relationship</th>
+        <th class="py-2 px-4">Next of Kin Passport No</th>
+        <th class="py-2 px-4">Next of Kin Phone</th>
+        <th class="py-2 px-4">ID Front</th>
+        <th class="py-2 px-4">ID Back</th>
         <th class="py-2 px-4">Actions</th>
       </tr>
     </thead>
@@ -70,12 +75,14 @@
         <td class="py-2 px-4 cursor-pointer">{{ user.branch }}</td>
         <td class="py-2 px-4 cursor-pointer">{{ user.bankCode }}</td>
         <td class="py-2 px-4 cursor-pointer">{{ user.nextOfKin.name }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.nextOfKin.relationship }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.nextOfKin.idPassportNo }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.nextOfKin.telephoneNumber }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.idPicture.frontSidePath }}</td>
+        <td class="py-2 px-4 cursor-pointer">{{ user.idPicture.backSidePath }}</td>
         <td class="py-2 px-4">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                  (click)="viewUserDetails(user.id)">
-            View
-          </button>
-          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          
+          <button class="bg-slate-950 text-white py-2 px-4 rounded"
                   (click)="deleteUser(user.id)">
             Delete
           </button>

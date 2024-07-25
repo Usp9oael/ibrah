@@ -36,6 +36,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { TransactionsComponent } from './dashboard/transactions/transactions.component';
 import { TransactionmodalComponent } from './dashboard/transactionmodal/transactionmodal.component';
 import { WithdrawComponent } from './dashboard/withdraw/withdraw.component';
+import { TransactionsmodalComponent } from './dashboard/transactionsmodal/transactionsmodal.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { WithdrawComponent } from './dashboard/withdraw/withdraw.component';
     ResetPasswordComponent,
     TransactionsComponent,
     TransactionmodalComponent,
-    WithdrawComponent
+    WithdrawComponent,
+    TransactionsmodalComponent
   ],
   imports: [
     BrowserModule,

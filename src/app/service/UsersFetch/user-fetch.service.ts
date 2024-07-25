@@ -8,14 +8,13 @@ import { User } from '../../../types/user.model'; // Adjust the import path as n
   providedIn: 'root'
 })
 export class UserFetchService {
-  private url = 'https://ef8f-41-80-112-189.ngrok-free.app';
+  private url = 'https://smartinvest.onrender.com';
 
   constructor(private httpClient: HttpClient) {}
 
   public postRequest(endpoint: string, data: any): Observable<any> {
     const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "ngrok-skip-browser-warning": ""
+      "Content-Type": "application/json"
     });
     return this.httpClient.post(`${this.url}${endpoint}`, JSON.stringify(data), { headers })
       .pipe(
@@ -24,9 +23,7 @@ export class UserFetchService {
   }
 
   public getRequest(endpoint: string, userId?: string): Observable<any> {
-    const headers = new HttpHeaders({
-      "ngrok-skip-browser-warning": ""
-    });
+    const headers = new HttpHeaders({});
     let url = `${this.url}${endpoint}`;
     if (userId) {
       url += `/${userId}`;
@@ -37,22 +34,18 @@ export class UserFetchService {
       );
   }
 
-  // Implementing getUserById
   public getUserById(userId: string): Observable<User> {
-    return this.getRequest('/api/fetchUsers', userId) as Observable<User>;
+    return this.getRequest('/api/open/fetchUsers', userId) as Observable<User>;
   }
 
-  public deleteUser(userId: number): Observable<any> {
-    const headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      "ngrok-skip-browser-warning": ""
-    });
-    const deleteUrlWithId = `${this.url}/api/fetchUsers/${userId}`;
-    return this.httpClient.delete(deleteUrlWithId, { headers })
-      .pipe(
-        catchError(this.handleError)
-      );
+  public deleteUser(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.url}/api/open/fetchUsers/${id}`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }).pipe(
+      catchError(this.handleError)
+    );
   }
+  
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';

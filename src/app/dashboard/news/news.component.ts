@@ -20,14 +20,26 @@ export class NewsComponent implements OnInit {
   fetchNews(): void {
     this.loading = true;
     this.newsService.getNews().subscribe(
-      (data: any[]) => {
-        console.log('News Data:', data); // Log the entire response to ensure imageUrl is present
-        this.newsData = data;
+      (response: any) => {
+        if (response && Array.isArray(response.articles)) {
+          this.newsData = response.articles.map((item: any) => ({
+            title: item.title,
+            author: item.author,
+            description: item.description,
+            url: item.url,
+            urlToImage: item.urlToImage || '',
+            id: item.source.id || null,
+            content: item.content,
+            name: item.source.name
+          }));
+        } else {
+          this.errorMessage = 'Invalid response structure';
+        }
         this.loading = false;
       },
       (error) => {
         console.error('Error fetching news:', error); // Improved error logging
-        this.errorMessage = error;
+        this.errorMessage = 'Error fetching news. Please try again later.';
         this.loading = false;
       }
     );

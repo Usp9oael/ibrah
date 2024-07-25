@@ -7,7 +7,7 @@ import { Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class UserAuthService {
-  private url: string = "https://investmentapp-1.onrender.com";
+  private url: string = "https://smartinvest.onrender.com";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -51,12 +51,27 @@ export class UserAuthService {
 
   public getProfile(): Observable<any> {
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Example token header
+      'Authorization': `Bearer ${this.getToken()}`, // Use getToken method
       'ngrok-skip-browser-warning': ""
     });
-    return this.httpClient.get(`${this.url}/api/admins/1`, { headers })
+    return this.httpClient.get(`${this.url}/api/open/admins/1`, { headers })
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  // Method to set token
+  public setToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  // Method to get token
+  public getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  // Method to remove token
+  public removeToken(): void {
+    localStorage.removeItem('token');
   }
 }

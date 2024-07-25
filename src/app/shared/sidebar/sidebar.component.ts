@@ -23,9 +23,11 @@ export class SidebarComponent {
     this.closeSidebarEvent.emit();
   }
 
-  confirmLogout() {
+  Logout() {
     this.showLogoutConfirmation = true;
     this.sidebarOpen = false
+    localStorage.removeItem("authToken")
+    this.router.navigate(["/login"])
   }
 
   cancelLogout() {

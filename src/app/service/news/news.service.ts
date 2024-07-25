@@ -1,40 +1,17 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsService {
-  private apiUrl = 'https://investmentapp.onrender.com/api/news';
 
-  constructor() {}
+  private apiUrl = 'https://smartinvest.onrender.com/api/open/news/financial'; // Ensure this is the correct API URL
 
-  getToken(): string {
-    return localStorage.getItem('authToken') || '';
-  }
+  constructor(private http: HttpClient) { }
 
-  getNews(): Observable<any[]> {
-    return new Observable(observer => {
-      const token = this.getToken();
-      axios.get(this.apiUrl, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(response => {
-        console.log('API Response:', response); // Log the entire API response
-        if (response.data && response.data.data) {
-          observer.next(response.data.data);
-          observer.complete();
-        } else {
-          observer.error('Invalid response structure');
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching news:', error);
-        observer.error('Error fetching news. Please try again later.');
-      });
-    });
+  getNews(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
   }
 }

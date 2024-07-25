@@ -1,40 +1,36 @@
 <div class="container mx-auto p-4">
-    <div class="mb-4">
-      <h1>Withdrawal Requests</h1>
-    </div>
-    <table class="table-auto bg-slate-950 text-white w-full">
-      <thead>
-        <tr>
-          <th class="py-2 px-4">ID</th>
-          <th class="py-2 px-4">Account Number</th>
-          <th class="py-2 px-4">Balance</th>
-          <th class="py-2 px-4">Payment Mode</th>
-          <th class="py-2 px-4">Reason</th>
-          <th class="py-2 px-4">Amount</th>
-          <th class="py-2 px-4">Bank Details</th>
-          <th class="py-2 px-4">Phone Number</th>
-          <th class="py-2 px-4">Created At</th>
-          <th class="py-2 px-4">Available Balance</th>
-          <th class="py-2 px-4">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let withdrawal of withdrawals">
-          <td class="py-2 px-4">{{ withdrawal.id }}</td>
-          <td class="py-2 px-4">{{ withdrawal.accountNumber }}</td>
-          <td class="py-2 px-4">{{ withdrawal.balance }}</td>
-          <td class="py-2 px-4">{{ withdrawal.paymentMode }}</td>
-          <td class="py-2 px-4">{{ withdrawal.reason }}</td>
-          <td class="py-2 px-4">{{ withdrawal.amount }}</td>
-          <td class="py-2 px-4">{{ withdrawal.bankDetails }}</td>
-          <td class="py-2 px-4">{{ withdrawal.phoneNumber }}</td>
-          <td class="py-2 px-4">{{ withdrawal.createdAt | date }}</td>
-          <td class="py-2 px-4">{{ withdrawal.availableBalance }}</td>
-          <td class="py-2 px-4">
-            <button class="bg-slate-950 text-white py-2 px-4 rounded" (click)="approveWithdrawal(withdrawal.id)">Approve</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="mb-4">
+    <h1><b>Withdrawal Requests</b></h1>
   </div>
-  
+  <table class="min-w-full bg-white shadow-md overflow-hidden">
+    <thead class="bg-gray-800 text-white">
+      <tr>
+        <th class="py-2 px-4">ID</th>
+        <th class="py-2 px-4">Account Number</th>
+        <th class="py-2 px-4">Account Name</th>
+        <th class="py-2 px-4">Account Balance</th>
+        <th class="py-2 px-4">Amount</th>
+        <th class="py-2 px-4">Payment Method</th>
+        <th class="py-2 px-4">Mpesa Number</th>
+        <th class="py-2 px-4">Reason</th>
+        <th class="py-2 px-4">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let withdrawal of withdrawals">
+        <td class="py-2 px-4">{{ withdrawal.id }}</td>
+        <td class="py-2 px-4">{{ withdrawal.accountNumber }}</td>
+        <td class="py-2 px-4">{{ withdrawal.accountName }}</td>
+        <td class="py-2 px-4">{{ withdrawal.accountBalance }}</td>
+        <td class="py-2 px-4">{{ withdrawal.amount }}</td>
+        <td class="py-2 px-4">{{ withdrawal.paymentMethod }}</td>
+        <td class="py-2 px-4">{{ withdrawal.mpesaNumber }}</td>
+        <td class="py-2 px-4">{{ withdrawal.reason }}</td>
+        <td class="py-2 px-4 flex space-x-2">
+          <button class="bg-green-500 text-white py-2 px-4 rounded" (click)="approveWithdrawal(withdrawal.id)">Approve</button>
+          <button class="bg-red-500 text-white py-2 px-4 rounded" (click)="rejectWithdrawal(withdrawal.id)">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

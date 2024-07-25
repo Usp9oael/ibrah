@@ -26,11 +26,17 @@ export class LoginComponent {
     this.loading = true;
     this.statusMessage = 'Signing in...';
 
-    this.userAuthService.postRequest('/api/admins/login', { email, password }, null).subscribe(
+    this.userAuthService.postRequest('/api/open/admins/login', { email, password }, null).subscribe(
       (response: any) => {
         console.log('Login successful', response);
         this.loading = false;
         this.statusMessage = 'Success';
+
+        // Save token to local storage
+        if (response.token) {
+          this.userAuthService.setToken(response.token);
+        }
+
         this.router.navigate(['/dashboard/home']);
       },
       (error: any) => {

@@ -8,8 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent 
- {
+export class UsersComponent implements OnInit {
   users: any[] = [];
   filteredUsers: any[] = [];
   searchQuery: string = '';
@@ -23,7 +22,7 @@ export class UsersComponent
   }
 
   fetchUsers(): void {
-    this.userFetchService.getRequest('/api/fetchUsers').subscribe(
+    this.userFetchService.getRequest('/api/open/fetchUsers').subscribe(
       (users: any[]) => {
         this.users = users;
         this.filteredUsers = [...this.users];
@@ -82,27 +81,24 @@ export class UsersComponent
         case 'bankCode':
           return user.bankCode.toLowerCase().includes(searchTerm);
         case 'nextOfKin':
-          return user.nextOfKin.name.toLowerCase().includes(searchTerm);
+          return user.nextOfKin?.name.toLowerCase().includes(searchTerm);
+        case 'telephoneNumber':
+          return user.telephoneNumber.toLowerCase().includes(searchTerm);
         default:
           return false;
       }
     });
   }
-
-  deleteUser(userId: number) {
-    if (confirm(`Are you sure you want to delete user ${userId}?`)) {
-      this.userFetchService.deleteUser(userId).subscribe(
-        () => {
-          console.log(`User ${userId} deleted successfully.`);
-          this.users = this.users.filter(user => user.id !== userId);
-          this.filteredUsers = [...this.users]; 
-        },
-        (error: HttpErrorResponse) => {
-          console.error(`Error deleting user ${userId}:`, error);
-          alert(`Error deleting user: ${error.message}`);
-        }
-      );
-    }
+  
+  deleteUser(id: number): void {
+    this.userFetchService.deleteUser(id).subscribe(() => {
+      // Remove the deleted user from the local array
+      this.users = this.users.filter(user => user.id !== id);
+      this.filteredUsers = [...this.users];
+    }, error => {
+      console.error('Error deleting user:', error);
+      // Optionally handle error here
+    });
   }
 
   openModal() {

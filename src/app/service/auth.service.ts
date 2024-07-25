@@ -7,21 +7,21 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://investmentapp-1.onrender.com'; // Your API URL
+  private apiUrl = 'https://smartinvest.onrender.com'; // Your API URL
 
   constructor(private http: HttpClient) {}
 
   requestOtp(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admins/reset-password/request`, { email });
+    return this.http.post(`${this.apiUrl}/api/open/admins/reset-password/request`, { email });
   }
 
   verifyOtp(email: string, otp: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/admins/reset-password/verify-otp`, { email, otp });
+    return this.http.post(`${this.apiUrl}/api/open/admins/reset-password/verify-otp`, { email, otp });
   }
 
   resetPassword(email: string, otp: string, newPassword: string): Observable<any> {
     const payload = { email, otp, newPassword };
-    return this.http.post<any>('https://investmentapp-1.onrender.com/api/admins/reset-password/confirm', payload);
+    return this.http.post<any>('https://smartinvest.onrender.com/api/open/admins/reset-password/confirm', payload);
   }
   
 }

@@ -32,21 +32,21 @@ export class MessagesComponent implements OnInit {
   }
 
   fetchApplyingAdvisors(): void {
-    this.http.get<FinancialAdvisor[]>('https://investmentapp-1.onrender.com/api/financial_advisors/pending').subscribe(
+    this.http.get<FinancialAdvisor[]>('https://smartinvest.onrender.com/api/open/financial_advisors/pending').subscribe(
       data => this.applyingAdvisors = data,
       error => console.error('Error fetching applying advisors', error)
     );
   }
 
   fetchApprovedAdvisors(): void {
-    this.http.get<FinancialAdvisor[]>('https://investmentapp-1.onrender.com/api/financial_advisors/enrolled').subscribe(
+    this.http.get<FinancialAdvisor[]>('https://smartinvest.onrender.com/api/open/financial_advisors/enrolled').subscribe(
       data => this.approvedAdvisors = data,
       error => console.error('Error fetching approved advisors', error)
     );
   }
 
   acceptAdvisor(advisorId: number): void {
-    this.http.post(`https://investmentapp-1.onrender.com/api/financial_advisors/pending/accept/{id}${advisorId}`, {}).subscribe(
+    this.http.post(`https://smartinvest.onrender.com/api/open/financial_advisors/pending/accept/${advisorId}`, {}).subscribe(
       () => {
         this.fetchApplyingAdvisors();
         this.fetchApprovedAdvisors();
@@ -56,7 +56,7 @@ export class MessagesComponent implements OnInit {
   }
 
   rejectAdvisor(advisorId: number): void {
-    this.http.post(`https://api.example.com/reject-advisor/${advisorId}`, {}).subscribe(
+    this.http.post(`https://smartinvest.onrender.com/reject-advisor/${advisorId}`, {}).subscribe(
       () => this.fetchApplyingAdvisors(),
       error => console.error('Error rejecting advisor', error)
     );
@@ -74,7 +74,7 @@ export class MessagesComponent implements OnInit {
   }
 
   createNewAdvisor(): void {
-    this.http.post('https://api.example.com/create-advisor', this.newAdvisor).subscribe(
+    this.http.post('https://smartinvest.onrender.com/create-advisor', this.newAdvisor).subscribe(
       () => {
         this.toggleCreateAdvisorForm();
         this.fetchApplyingAdvisors();

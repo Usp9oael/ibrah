@@ -9,7 +9,7 @@ import { Fund } from '../../../types/fund.model';
 })
 export class FundsService {
 
-  private baseUrl = 'https://investmentapp-1.onrender.com/api/funds';
+  private baseUrl = 'https://smartinvest.onrender.com/api/open/funds';
 
   constructor(private http: HttpClient) {}
 
@@ -53,7 +53,7 @@ export class FundsService {
   }
 
   deleteFund(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}api/data`, {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }).pipe(
       catchError(this.handleError)
