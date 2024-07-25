@@ -16,7 +16,7 @@ export class LoginComponent {
 
   constructor(private userAuthService: UserAuthService, private router: Router) { }
 
-  login(loginForm: NgForm) { // Update parameter to NgForm
+  login(loginForm: NgForm) { 
     if (loginForm.invalid) {
       this.errorMessage = 'Please enter valid email and password.';
       return;
@@ -26,15 +26,14 @@ export class LoginComponent {
     this.loading = true;
     this.statusMessage = 'Signing in...';
 
-    this.userAuthService.postRequest('/api/open/admins/login', { email, password }, null).subscribe(
+    this.userAuthService.postRequest('/api/open/admins/login', { email, password }).subscribe(
       (response: any) => {
         console.log('Login successful', response);
         this.loading = false;
         this.statusMessage = 'Success';
-
-        // Save token to local storage
         if (response.token) {
           this.userAuthService.setToken(response.token);
+          // this.router.navigate(['/dashboard/home']);
         }
 
         this.router.navigate(['/dashboard/home']);

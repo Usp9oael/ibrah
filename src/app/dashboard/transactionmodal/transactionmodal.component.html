@@ -1,85 +1,81 @@
-<!-- <div class="inset-0 bg-black/40 fixed h-screen w-screen flex items-center justify-center" *ngIf="isVisible">
-  <div class="bg-white p-4 relative w-full max-w-md mx-4">
+<div class="inset-0 bg-black/40 fixed h-screen w-screen flex items-center justify-center" *ngIf="isVisible">
+  <div class="max-w-md mx-auto relative bg-white p-20"> 
     <button (click)="closeModal()" class="absolute left-0 top-0 p-3">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="12" cy="12" r="12" fill="#E0E0E0"/>
         <path d="M15 9L9 15" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M9 9L15 15" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
-    </button>
-    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-4 mt-10">
-      <div class="mb-4">
-        <label for="phoneNumber" class="block text-gray-700">Phone Number *</label>
-        <input type="text" id="phoneNumber" formControlName="phoneNumber" class="w-full p-2 border border-gray-300 mt-1" required />
-      </div>
-      <div class="mb-4">
-        <label for="accountName" class="block text-gray-700">Account Name *</label>
-        <select id="accountName" formControlName="accountName" class="w-full p-2 border border-gray-300 mt-1" required>
-          <option value="" disabled>Select an account</option>
-          <option value="SIGB">SIGB</option>
-          <option value="SIRP">SIRP</option>
-          <option value="SIMMF">SIMMF</option>
-        </select>
-      </div>
-      <div class="mb-4">
-        <label for="amount" class="block text-gray-700">Amount *</label>
-        <input type="number" id="amount" formControlName="amount" class="w-full p-2 border border-gray-300 mt-1" required />
-      </div>
-      <div class="mb-4">
-        <label for="paymentMode" class="block text-gray-700">Payment Mode *</label>
-        <select id="paymentMode" formControlName="paymentMode" class="w-full p-2 border border-gray-300 mt-1" required>
-          <option value="" disabled>Select payment mode</option>
-          <option value="Bank">Bank</option>
-          <option value="Cash">Cash</option>
-        </select>
-      </div>
-      <div class="mb-4">
-        <label for="accountNumber" class="block text-gray-700">Account Number *</label>
-        <input type="text" id="accountNumber" formControlName="accountNumber" class="w-full p-2 border border-gray-300 mt-1" required />
-      </div>
-      <div class="mb-4">
-        <label for="transactionType" class="block text-gray-700">Transaction Type *</label>
-        <select id="transactionType" formControlName="transactionType" class="w-full p-2 border border-gray-300 mt-1" required>
-          <option value="" disabled>Select transaction type</option>
-          <option value="Deposit">Deposit</option>
-          <option value="Withdrawal">Withdrawal</option>
-        </select>
-      </div>
-      <div>
-        <button type="submit" class="bg-slate-950 w-full text-white p-2 md:py-3 mb-2">Create Transaction</button>
-        <button type="button" (click)="closeModal()" class="bg-slate-600 w-full text-white p-2 md:py-3 mb-2">Cancel</button>
-      </div>
-    </form>
+    </button> 
+    <span class="text-xl font-bold mb-4">Verify User Details</span>  
+    <div class=" mb-4">
+      <label for="firstName">First Name:</label>
+    <input  
+      type="text"  
+      [(ngModel)]="firstName"  
+      placeholder="First Name"  
+      class="block border mt-1 mb-2 p-2 w-full"  
+      required  
+    />  
   </div>
-</div> -->
-<!-- transactionmodal.component.html -->
-<div *ngIf="isVisible" class="modal-overlay">
-  <div class="modal-content">
-    <button (click)="closeModal()" class="close-btn">X</button>
-    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()">
-      <label for="phoneNumber">Phone Number</label>
-      <input id="phoneNumber" formControlName="phoneNumber" type="text">
-      
-      <label for="accountName">Account Name</label>
-      <input id="accountName" formControlName="accountName" type="text">
-      
-      <label for="amount">Amount</label>
-      <input id="amount" formControlName="amount" type="text">
-      
-      <label for="paymentMode">Payment Mode</label>
-      <input id="paymentMode" formControlName="paymentMode" type="text">
-      
-      <label for="accountNumber">Account Number</label>
-      <input id="accountNumber" formControlName="accountNumber" type="text">
-      
-      <label for="transactionType">Transaction Type</label>
-      <select id="transactionType" formControlName="transactionType">
-        <option value="Bank">Bank</option>
-        <option value="Cash">Cash</option>
-      </select>
-      
-      <button type="submit">Create Transaction</button>
-      <button type="button" (click)="closeModal()">Cancel</button>
-    </form>
+  <div class=" mb-4">
+  <label for="lastName">Last Name:</label>
+    <input  
+      type="text"  
+      [(ngModel)]="lastName"  
+      placeholder="Last Name"  
+      class="block border mt-1 mb-2 p-2 w-full"  
+      required  
+    />  
+  </div>
+    <button (click)="fetchDetails()" class=" text-neutral-100 px-6 py-3 bg-slate-950">  
+      Verify
+    </button>  
+  
+    <h2 class="text-lg font-semibold mt-4">User Details</h2>  
+    <table class="min-w-full bg-white shadow-md overflow-hidden">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="py-2 px-4">Phone Number</th>
+          <th class="py-2 px-4">Acc. Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="py-2 px-4">{{ phoneNumber }}</td>
+          <td class="py-2 px-4">{{ accountNumber }}</td>
+          </tr>
+      </tbody>
+      </table>
+  
+    <h2 class="text-lg font-semibold mt-4">Submit Payment</h2>  
+    <select [(ngModel)]="transactionType" class="px-4 py-2 text-slate-950 border border-gray-200 m-3">
+      <option value="" disabled>Select Bank or Cash Payment</option>
+      <option value="cash">Cash</option>
+      <option value="bank">Bank</option>
+    </select>
+    <div class=" mb-4">
+      <label for="accountName">Account Name:</label>
+    <input  
+      type="text"  
+      [(ngModel)]="accountName"  
+      placeholder="Account Name"  
+      class="px-4 py-2 text-slate-950 border border-gray-200 m-3" 
+      required  
+    />  
+    </div>
+    <div class=" mb-4">
+      <label for="amount">Amount:</label>
+    <input  
+      type="number"  
+      [(ngModel)]="amount"  
+      placeholder="Amount"  
+      class="px-4 py-2 text-slate-950 border border-gray-200 m-3" 
+      required  
+    />  
+    </div>
+    <button (click)="submitPayment()" class=" text-neutral-100 px-6 py-3 bg-slate-950">  
+      Submit Payment  
+    </button>  
   </div>
 </div>

@@ -19,6 +19,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TransactionsComponent } from './dashboard/transactions/transactions.component';
 import { WithdrawComponent } from './dashboard/withdraw/withdraw.component';
+import { AuthGuard } from './service/auth/auth.guard';
 
 const routes: Routes = [
   // Default redirect to login page
@@ -41,7 +42,7 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardLayoutComponent,
     children: [
-      { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
+      { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } ,  canActivate: [AuthGuard]},
       { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Profile' } },
       { path: 'withdrawal_requests', component: WithdrawComponent, data: { breadcrumb: 'Withdrawal Requests' } },
       { path: 'analytics', component: AnalyticsComponent, data: { breadcrumb: 'Analytics' } },

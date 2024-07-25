@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserAuthService } from '../../service/auth/user-auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +13,13 @@ export class SidebarComponent {
   isDropdownOpen: boolean = false;
   showLogoutConfirmation: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private authService: UserAuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
+  }
 
   navigate(path: string) {
     this.router.navigate([path]);
@@ -23,14 +30,8 @@ export class SidebarComponent {
     this.closeSidebarEvent.emit();
   }
 
-  Logout() {
-    this.showLogoutConfirmation = true;
-    this.sidebarOpen = false
-    localStorage.removeItem("authToken")
-    this.router.navigate(["/login"])
-  }
-
-  cancelLogout() {
-    this.showLogoutConfirmation = false;
+  logout() {
+    this.authService.removeToken();
+    this.router.navigate(['/login']);
   }
 }

@@ -73,10 +73,10 @@
       </div>
       <!-- Additional Fields can be added here as needed -->
       <div class="flex justify-end">
-        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors duration-300">
+        <button type="submit" class="bg-slate-950 text-white px-4 py-2 transition-colors duration-300">
           Create
         </button>
-        <button type="button" (click)="closeCreateFundModal()" class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 transition-colors duration-300">
+        <button type="button" (click)="closeCreateFundModal()" class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 hover:bg-gray-400 transition-colors duration-300">
           Cancel
         </button>
       </div>
@@ -103,7 +103,7 @@
         <td class="py-2 px-4 cursor-pointer">{{ fund.name }}</td>
         <td class="py-2 px-4 cursor-pointer">{{ fund.abbreviation }}</td>
         <td class="py-2 px-4 cursor-pointer">{{ fund.fundType }}</td>
-        <td class="py-2 px-4 cursor-pointer">{{ fund.currency }}</td>
+        <td class="py-2 px-4 cursor-pointer">KES {{ fund.currency }}</td>
         <td class="py-2 px-4 cursor-pointer">{{ fund.rate }}</td>
         <!-- Actions buttons -->
         <td class="py-2 px-4">

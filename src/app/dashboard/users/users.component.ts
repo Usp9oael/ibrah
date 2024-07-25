@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserFetchService } from '../../service/UsersFetch/user-fetch.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { User } from '../../../types/user.model';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: any[] = [];
+  users: User[] = [];
   filteredUsers: any[] = [];
   searchQuery: string = '';
   searchCriteria: string = 'id';
