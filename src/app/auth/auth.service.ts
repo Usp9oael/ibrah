@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'YOUR_API_URL_HERE'; // Replace with your API URL
+  private apiUrl = 'YOUR_API_URL_HERE'; 
 
   constructor(private http: HttpClient) {}
 

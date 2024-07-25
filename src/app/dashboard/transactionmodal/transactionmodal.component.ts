@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Transaction } from '../transactions/transaction';
+import { TransactionsService } from '../../service/transactions.service';
 
 @Component({
   selector: 'app-transactionmodal',
@@ -14,8 +15,21 @@ export class TransactionmodalComponent {
   @Output() close = new EventEmitter<void>();
   transactionForm: FormGroup;
   apiUrl: string = 'https://smartinvest.onrender.com';
+  isModalVisible: boolean = false;
+  transactions: Transaction[] = [];
+  filteredTransactions: Transaction[] = [];
+  searchQuery: string = '';
+  searchCriteria: string = 'id';
+  searchParams: any;
+  firstName: string = '';  
+  lastName: string = '';  
+  phoneNumber: string = '';  
+  accountNumber: string = '';  
+  accountName: string = '';  
+  amount: number = 0; 
+  private apiBaseUrl = 'https://smartinvest.onrender.com/api/open/admins/transactions';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private transactionsService: TransactionsService, private fb: FormBuilder, private http: HttpClient) {
     this.transactionForm = this.fb.group({
       phoneNumber: ['', Validators.required],
       accountName: ['', Validators.required],
@@ -35,39 +49,67 @@ export class TransactionmodalComponent {
     this.isVisible = false;
     this.close.emit();
   }
-
-  onSubmit() {
-    if (this.transactionForm.valid) {
-      const transaction = this.transactionForm.value;
-      
-      let apiCall: Observable<any>;
-
-      if (this.transactionType === 'Bank') {
-        apiCall = this.createBankTransaction(transaction);
-      } else if (this.transactionType === 'Cash') {
-        apiCall = this.createCashTransaction(transaction);
-      } else {
-        console.error('Invalid transaction type');
-        return;
+  fetchTransactions(): void {
+    this.transactionsService.getTransactions().subscribe(
+      (transactions: Transaction[]) => {
+        console.log("Fetched Transactions", transactions);
+        this.transactions = transactions;
+        this.filteredTransactions = [...this.transactions];
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error fetching transactions', error);
       }
-      
-      apiCall.subscribe(
-        response => {
-          console.log('Transaction created successfully', response);
-          this.closeModal();
-        },
-        error => {
-          console.error('Error creating transaction', error);
-        }
-      );
-    }
+    );
   }
 
-  createBankTransaction(transaction: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/open/admins/transactions/bank-payment`, transaction);
+  searchTransactions() {
+    const normalizedQuery = this.searchQuery.trim().toLowerCase();
+    if (!normalizedQuery) {
+      this.filteredTransactions = [...this.transactions];
+      return;
+    }
+    this.filteredTransactions = this.transactions.filter((transaction: any) => {
+      const searchField = (transaction[this.searchCriteria] || '').toString().toLowerCase();
+      return searchField.includes(normalizedQuery);
+    });
   }
-  
-  createCashTransaction(transaction: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/open/admins/transactions/cash-payment`, transaction);
-  }
+
+  fetchDetails() {  
+    const url = `${this.apiBaseUrl}/fetch-details?firstName=${this.firstName}&lastName=${this.lastName}`;  
+    this.http.get<any>(url).subscribe({  
+      next: (data) => {  
+        this.phoneNumber = data.phoneNumber;  
+        this.accountNumber = data.accountNumber;  
+      },  
+      error: (error) => {  
+        console.error('Error fetching user details', error);  
+      }  
+    });  
+  }  
+
+  submitPayment() {  
+    let url = '';
+
+    if (this.transactionType === 'cash') {
+      url = `${this.apiBaseUrl}/cash-payment`;
+    } else if (this.transactionType === 'bank') {
+      url = `${this.apiBaseUrl}/bank-payment`;
+    }
+
+    const paymentData = {  
+      phoneNumber: this.phoneNumber,  
+      accountName: this.accountName,  
+      amount: this.amount,  
+      accountNumber: this.accountNumber  
+    };  
+
+    this.http.post<any>(url, paymentData).subscribe({  
+      next: (result) => {  
+        alert(result.message);
+      },  
+      error: (error) => {  
+        console.error('Error processing payment', error);  
+      }  
+    });  
+  }  
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -37,6 +37,7 @@ import { TransactionsComponent } from './dashboard/transactions/transactions.com
 import { TransactionmodalComponent } from './dashboard/transactionmodal/transactionmodal.component';
 import { WithdrawComponent } from './dashboard/withdraw/withdraw.component';
 import { TransactionsmodalComponent } from './dashboard/transactionsmodal/transactionsmodal.component';
+import { AuthInterceptor } from './service/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { TransactionsmodalComponent } from './dashboard/transactionsmodal/transa
     ReactiveFormsModule
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

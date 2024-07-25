@@ -1,4 +1,4 @@
-<!-- <div class="flex items-center justify-between mx-5">
+<div class="flex items-center justify-between mx-5">
   <form class="flex items-center space-x-4 mb-4" (ngSubmit)="searchTransactions()">
     <select id="searchCriteria" class="px-2 py-2 border" [(ngModel)]="searchCriteria" name="searchCriteria">
       <option value="id">ID</option>
@@ -11,11 +11,11 @@
   </form>
 
   <div class="mb-4 gap-3 flex">
-    <button (click)="openModal()" class="px-4 py-2 bg-slate-950 text-neutral-100">
+    <!-- <button (click)="openModal()" class="px-4 py-2 bg-slate-950 text-neutral-100">
       Create Bank Transaction 
-    </button>
+    </button> -->
     <button (click)="openModal()" class="px-4 py-2 bg-slate-950 text-neutral-100">
-      Create Cash Transaction 
+      Create Transaction
     </button>
     <app-transactionmodal [isVisible]="isModalVisible" (close)="closeModal()"></app-transactionmodal>
   </div>
@@ -55,8 +55,8 @@
       </tr>
     </tbody>
   </table>
-</div> -->
-<div class="max-w-md mx-auto p-4">  
+</div>
+<!-- <div class="max-w-md mx-auto p-4">  
   <h1 class="text-xl font-bold mb-4">Fetch User Details</h1>  
   <input  
     type="text"  
@@ -98,4 +98,4 @@
   <button (click)="submitPayment()" class="bg-green-500 text-white p-2 rounded">  
     Submit Payment  
   </button>  
-</div>
+</div> -->

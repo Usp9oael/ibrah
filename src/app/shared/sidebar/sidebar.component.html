@@ -18,7 +18,7 @@
   <div>
     <!-- User logout -->
     <div class="w-full">
-      <button (click)="Logout()" class="px-4 py-3 text-neutral-100 border-t w-full border-gray-400">
+      <button (click)="logout()" class="px-4 py-3 text-neutral-100 border-t w-full border-gray-400">
         <div class=" flex items-center justify-between">
           <span>
             Logout
@@ -53,19 +53,6 @@
           </div>
         </div>
       </button>
-
-      <div *ngIf="showLogoutConfirmation"
-        class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-        <div class="bg-slate-950 p-4 rounded shadow-md">
-          <h2 class="text-lg font-bold mb-4">Confirm Logout</h2>
-          <p class="mb-4">Are you sure you want to logout?</p>
-          <div class="flex justify-end space-x-4">
-            <button (click)="cancelLogout()" class="px-4 py-2 text-slate-950 bg-gray-300 rounded">Cancel</button>
-            <button (click)="navigate('/login')"
-              class="px-4 py-2 bg-slate-950 border-2 border-neutral-100 text-white rounded">Yes, Logout</button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
