@@ -1,49 +1,45 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms'; // Import NgForm for form handling
 import { UserAuthService } from '../../service/auth/user-auth.service';
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
   loading = false;
-  statusMessage = 'Sign in'; 
-  errorMessage = ''; 
-  validationErrors: any;
+  statusMessage = 'Log In';
+  validationErrors: string = '';
 
-  constructor(private userAuthService: UserAuthService, private router: Router) { }
+  constructor(private userAuthService: UserAuthService, private router: Router) {}
 
-  login(loginForm: NgForm) { 
-    if (loginForm.invalid) {
-      this.errorMessage = 'Please enter valid email and password.';
+  login(form: NgForm) {
+    if (form.invalid) {
+      this.validationErrors = 'Please fill in all required fields.';
       return;
     }
 
-    const { email, password } = loginForm.value;
     this.loading = true;
-    this.statusMessage = 'Signing in...';
+    this.statusMessage = 'Authenticating...';
 
-    this.userAuthService.postRequest('/api/open/admins/login', { email, password }).subscribe(
-      (response: any) => {
-        console.log('Login successful', response);
-        this.loading = false;
-        this.statusMessage = 'Success';
-        if (response.token) {
-          this.userAuthService.setToken(response.token);
-          // this.router.navigate(['/dashboard/home']);
-        }
+    const { email, password } = form.value;
 
-        this.router.navigate(['/dashboard/home']);
-      },
-      (error: any) => {
-        console.error('Login failed', error);
+    this.userAuthService
+      .login(email, password)
+      .then(() => {
+        this.statusMessage = 'Welcome back!';
         this.loading = false;
-        this.errorMessage = 'Login failed. Please try again.';
-        console.log(error.status);
-      }
-    );
+
+        // Redirect to community dashboard
+        this.router.navigate(['/dashboard']);
+      })
+      .catch((error: any) => {
+        this.validationErrors = error.message || 'Login failed. Try again.';
+        this.statusMessage = 'Try again';
+        this.loading = false;
+      });
   }
 }

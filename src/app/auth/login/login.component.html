@@ -1,52 +1,73 @@
-<div class="flex items-center justify-center min-h-screen">
-  <div class="w-full max-w-4xl flex">
-    <div class="w-1/2 bg-white shadow-md rounded-lg overflow-hidden">
-      <div class="p-6">
-        <div class="mb-4 text-center">
-          <h2 class="text-2xl font-semibold text-slate-950">Admin Login</h2>
-          <p class="text-sm text-gray-600">Enter your credentials to access your account</p>
-        </div>
-        <form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
-          <p *ngIf="validationErrors" class="text-center mb-4">
-            <small class="text-red-500">{{ validationErrors }}</small>
-          </p>
-          <div class="mb-4">
-            <label for="email" class="sr-only">Email</label>
-            <input type="email" id="email" name="email" required ngModel placeholder="Email address"
-                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
-          </div>
-          <div class="mb-4">
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" required ngModel placeholder="Password"
-                   class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
-          </div>
-          <p *ngIf="errorMessage" class="text-red-500 text-sm mb-2">{{ errorMessage }}</p>
-          <div class="flex items-center justify-between mb-4">
-            <label class="flex items-center text-slate-950">
-              <input type="checkbox" class="mr-2" />
-              Remember me
-            </label>
-            <a routerLink="/forgot-password" class="text-teal-500 hover:underline">Forget password?</a>
-          </div>
-          <div class="flex items-center justify-center">
-            <button [disabled]="loading" [ngClass]="{
-              'bg-slate-950 focus:ring-2 focus:ring-offset-2 focus:ring-teal-500': !statusMessage.includes('retry'),
-              'bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-offset-2 focus:ring-red-500': statusMessage.includes('retry')
-            }" class="group relative w-full flex justify-center py-2 px-4 border rounded-b-md border-transparent text-sm font-medium text-white focus:outline-none">
-              <span *ngIf="!loading">{{ statusMessage }}</span>
-              <span *ngIf="statusMessage.includes('retry')">{{ errorMessage }}</span>
-              <svg *ngIf="loading" class="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            </button>
-          </div>
-        </form>
+<div class="flex items-center justify-center min-h-screen bg-slate-100">
+  <div class="w-full max-w-4xl flex shadow-xl rounded-xl overflow-hidden">
+    
+    <!-- Left / Form -->
+    <div class="w-1/2 bg-white p-8">
+      
+      <div class="mb-6 text-center">
+        <h2 class="text-3xl font-bold text-slate-900">Welcome Back to Maida</h2>
+        <p class="text-sm text-gray-600 mt-1">
+          Reconnect with community healing, climate action, and youth empowerment.
+        </p>
       </div>
+
+      <form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
+        
+        <p *ngIf="validationErrors" class="text-center mb-4">
+          <small class="text-red-500">{{ validationErrors }}</small>
+        </p>
+
+        <div class="mb-4">
+          <label for="email" class="sr-only">Email</label>
+          <input type="email" id="email" name="email" required ngModel 
+          placeholder="Email Address"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600" />
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="sr-only">Password</label>
+          <input type="password" id="password" name="password" required ngModel 
+          placeholder="Password"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600" />
+        </div>
+
+        <div class="text-right mb-4">
+          <a routerLink="/forgot-password" class="text-teal-700 text-sm hover:underline">
+            Forgot your password?
+          </a>
+        </div>
+
+        <div class="mt-6">
+          <button [disabled]="loading"
+          class="w-full py-3 bg-teal-600 hover:bg-teal-700 transition text-white font-semibold rounded-lg shadow focus:ring-4 focus:ring-teal-500">
+            <span *ngIf="!loading">{{ statusMessage || 'Log In' }}</span>
+            <svg *ngIf="loading" class="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.3 0 0 5.3 0 12h4z"></path>
+            </svg>
+          </button>
+        </div>
+
+      </form>
+
+      <div class="text-center mt-5">
+        <a routerLink="/register" class="text-teal-700 hover:underline text-sm">
+          New to Maida? Join the movement
+        </a>
+      </div>
+
     </div>
-    <div class="w-1/2 bg-teal-500 text-white p-6 rounded-lg shadow-md flex flex-col justify-center">
-      <h2 class="text-2xl font-semibold mb-4">Ready to Continue?</h2>
-      <p class="text-lg">Sign in to manage your investments with confidence and precision</p>
+
+    <!-- Right / Inspiration -->
+    <div class="w-1/2 bg-teal-700 text-white p-8 flex flex-col justify-center space-y-4">
+      <h2 class="text-3xl font-bold">Healing. Innovation. Community.</h2>
+      <p class="text-lg opacity-90">
+        Log in to access your activities, view impact, volunteer updates, and community programs.
+      </p>
+      <p class="text-sm opacity-80">
+        Together, we are building a sustainable future grounded in dignity and creativity.
+      </p>
     </div>
+    
   </div>
 </div>

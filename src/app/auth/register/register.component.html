@@ -1,54 +1,88 @@
-<div class="flex items-center justify-center min-h-screen">
-  <div class="w-full max-w-4xl flex">
-    <div class="w-1/2 bg-white shadow-md rounded-lg overflow-hidden">
-      <div class="p-6">
-        <div class="mb-4 text-center">
-          <h2 class="text-2xl font-semibold text-slate-950">Admin Register</h2>
-          <p class="text-sm text-gray-600">Enter your details to create an account</p>
-        </div>
-        <form (ngSubmit)="register(registerForm)" #registerForm="ngForm">
-          <p *ngIf="validationErrors" class="text-center mb-4">
-            <small class="text-red-500">{{ validationErrors }}</small>
-          </p>
-          <div class="mb-4">
-            <label for="userName" class="sr-only">Username</label>
-            <input type="text" id="userName" name="userName" required ngModel placeholder="Username" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
-          </div>
-          <div class="mb-4">
-            <label for="email" class="sr-only">Email</label>
-            <input type="email" id="email" name="email" required ngModel placeholder="Email address" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
-          </div>
-          <div class="mb-4">
-            <label for="phoneNumber" class="sr-only">Phone Number</label>
-            <input type="text" id="phoneNumber" name="phoneNumber" required ngModel placeholder="Phone Number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
-          </div>
-          <div class="mb-4">
-            <label for="idNumber" class="sr-only">ID Number</label>
-            <input type="text" id="idNumber" name="idNumber" required ngModel placeholder="ID Number" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
-          </div>
-          <div class="mb-4">
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" required ngModel placeholder="Password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500" />
-          </div>
-          <div class="flex items-center justify-center">
-            <button [disabled]="loading" [ngClass]="{
-              'bg-slate-950 focus:ring-2 focus:ring-offset-2 focus:ring-teal-500': !statusMessage.includes('retry'),
-              'bg-red-600 hover:bg-red-700 focus:ring-2 focus:ring-offset-2 focus:ring-red-500': statusMessage.includes('retry')
-            }" class="group relative w-full flex justify-center py-2 px-4 border rounded-b-md border-transparent text-sm font-medium text-white focus:outline-none">
-              <span *ngIf="!loading">{{ statusMessage }}</span>
-              <span *ngIf="statusMessage.includes('retry')">{{ errorMessage }}</span>
-              <svg *ngIf="loading" class="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-            </button>
-          </div>
-        </form>
+<div class="flex items-center justify-center min-h-screen bg-slate-100">
+  <div class="w-full max-w-4xl flex shadow-xl rounded-xl overflow-hidden">
+    
+    <!-- Left / Form -->
+    <div class="w-1/2 bg-white p-8">
+      
+      <div class="mb-6 text-center">
+        <h2 class="text-3xl font-bold text-slate-900">Join the Maida Community</h2>
+        <p class="text-sm text-gray-600 mt-1">
+          Empower youth. Heal communities. Support sustainability.
+        </p>
       </div>
+
+      <form (ngSubmit)="register(registerForm)" #registerForm="ngForm">
+        
+        <p *ngIf="validationErrors" class="text-center mb-4">
+          <small class="text-red-500">{{ validationErrors }}</small>
+        </p>
+
+        <div class="mb-4">
+          <label for="userName" class="sr-only">Full Name</label>
+          <input type="text" id="userName" name="userName" required ngModel 
+          placeholder="Full Name"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600" />
+        </div>
+
+        <div class="mb-4">
+          <label for="email" class="sr-only">Email</label>
+          <input type="email" id="email" name="email" required ngModel 
+          placeholder="Email Address"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600" />
+        </div>
+
+        <div class="mb-4">
+          <label for="phoneNumber" class="sr-only">Phone</label>
+          <input type="text" id="phoneNumber" name="phoneNumber" required ngModel 
+          placeholder="Phone Number"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600" />
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="sr-only">Password</label>
+          <input type="password" id="password" name="password" required ngModel 
+          placeholder="Create Password"
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600" />
+        </div>
+
+        <div class="mb-4">
+          <label for="role" class="sr-only">How do you want to join?</label>
+          <select id="role" name="role" ngModel required
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-600 bg-white">
+            <option value="" disabled selected>Select how you want to engage</option>
+            <option value="supporter">Supporter / Donor</option>
+            <option value="volunteer">Volunteer</option>
+            <option value="youth">Youth Member</option>
+            <option value="partner">Organization / Partner</option>
+          </select>
+        </div>
+
+        <div class="mt-6">
+          <button [disabled]="loading"
+          class="w-full py-3 bg-teal-600 hover:bg-teal-700 transition text-white font-semibold rounded-lg shadow focus:ring-4 focus:ring-teal-500">
+            <span *ngIf="!loading">{{ statusMessage || 'Register' }}</span>
+            <svg *ngIf="loading" class="animate-spin h-5 w-5 mx-auto text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.3 0 0 5.3 0 12h4z"></path>
+            </svg>
+          </button>
+        </div>
+
+      </form>
     </div>
-    <div class="w-1/2 bg-teal-500 text-white p-6 rounded-lg shadow-md flex flex-col justify-center">
-      <h2 class="text-2xl font-semibold mb-4">Ready to Join Us?</h2>
-      <p class="text-lg">Register to start managing your investments with confidence and precision</p>
+
+    <!-- Right / Inspiration -->
+    <div class="w-1/2 bg-green-700 text-white p-8 flex flex-col justify-center space-y-4">
+      <h2 class="text-3xl font-bold">A Future Rooted in Healing</h2>
+      <p class="text-lg opacity-90">
+        By joining Maida, you support mental wellness, climate action,
+        sustainability, and youth empowerment in Kibra—and beyond.
+        Fullstack develpoment class
+      </p>
+      <p class="text-sm opacity-80">
+        Together, we grow communities grounded in culture, nature, and dignity.
+      </p>
     </div>
+    
   </div>
 </div>

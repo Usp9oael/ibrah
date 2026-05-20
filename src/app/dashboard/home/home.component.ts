@@ -39,20 +39,19 @@ export class HomeComponent implements OnInit {
   }
 
   fetchProfile(): void {
-    this.loading = true;
-    this.userAuthService.getProfile().subscribe(
-      (data) => {
-        console.log('Profile data:', data); // Log profile data
-        this.profile = data;
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Failed to fetch profile data', error); // Log errors
-        this.error = true;
-        this.loading = false;
-      }
-    );
-  }
+  this.loading = true;
+
+  this.userAuthService.getProfile().then((res: any) => {
+    console.log("Profile data:", res);
+    this.profile = res?.user ?? res;
+    this.loading = false;
+  }).catch((err: any) => {
+    console.error("Failed to fetch profile data", err);
+    this.error = true;
+    this.loading = false;
+  });
+}
+
 
   setFancyData() {
     // Example of setting some fancy data

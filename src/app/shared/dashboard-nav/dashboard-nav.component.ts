@@ -8,33 +8,34 @@ import { User } from '../../user';
   templateUrl: './dashboard-nav.component.html',
   styleUrls: ['./dashboard-nav.component.css']
 })
-
-// implements oninit
-export class DashboardNavComponent implements OnInit  {
+export class DashboardNavComponent implements OnInit {
   user!: User;
-  sidebarOpen = false; 
-  isDropdownOpen: boolean = false;
-  showLogoutConfirmation: boolean = false;
-  profile: any;
+  sidebarOpen = false;
+  isDropdownOpen = false;
+  showLogoutConfirmation = false;
+  profile: any = null;
   loading = false;
   error = false;
 
-  constructor(public userAuthService: UserAuthService, private router: Router) {}
+  constructor(
+    private userAuthService: UserAuthService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    this.loading = true;
-    this.userAuthService.getProfile().subscribe(
-      (data) => {
-        console.log('Profile data:', data); // Log profile data
-        this.profile = data;
-        this.loading = false;
-      },
-      (error) => {
-        console.error('Failed to fetch profile data', error); // Log errors
-        this.error = true;
-        this.loading = false;
-      }
-    );
-  }
+  this.loading = true;
+  this.userAuthService.getProfile()
+    .then((res: any) => {
+      this.profile = res?.profile ?? null;
+      this.loading = false;
+    })
+    .catch((err: any) => {
+      console.error(err);
+      this.error = true;
+      this.loading = false;
+    });
+}
+
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -46,7 +47,7 @@ export class DashboardNavComponent implements OnInit  {
 
   navigate(path: string) {
     this.router.navigate([path]);
-    this.sidebarOpen = false; 
+    this.sidebarOpen = false;
   }
 
   confirmLogout() {
@@ -56,6 +57,4 @@ export class DashboardNavComponent implements OnInit  {
   cancelLogout() {
     this.showLogoutConfirmation = false;
   }
-
-  
 }
